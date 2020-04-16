@@ -1,0 +1,36 @@
+---
+avail_zone_comm: melbourne-qh2-uom
+instance_image_comm: 215f9775-483c-4e0a-b703-d21a5c966f2e
+instance_network_comm: qh2-uom-internal
+instance_flavor_comm: uom.mse.2c9g
+
+security_groups:
+  name: COMP90024_Security
+  description: "Security group for COMP90024"
+  protocol: tcp
+  remote_group: COMP90024_Security
+  remote_ip_prefix: 0.0.0.0/0
+  rules:
+    - port_range_min: 22
+      port_range_max: 22
+    - port_range_min: 80
+      port_range_max: 80
+    - port_range_min: 8080
+      port_range_max: 8080
+
+keypair_name_comm: Marco_Demo_Key
+keypair_public_key_file_comm: /home/mmarasco/Marco_Demo_Key.pem
+
+instances:
+  - name: instance_1
+    volumes: ["instance_1-vol"]
+    size: 10
+  - name: instance_2
+    volumes: ["instance_2-vol"]
+    size: 10
+  - name: instance_3
+    volumes: ["instance_3-vol"]
+    size: 10
+  - name: instance_4
+    volumes: ["instance_4-vol"]
+    size: 10

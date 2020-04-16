@@ -1,0 +1,107 @@
+---
+- name: Install pip (Python3)
+  become: yes
+  apt:
+    name: python3-pip
+    state: latest
+    update_cache: yes
+
+- name: Update pip (Python3)
+  pip:
+    name: pip
+    executable: pip3
+    state: latest
+
+- name: Install docker-py (Python3)
+  pip:
+    name: docker
+    state: latest
+    executable: pip
+
+- name: Config Docker proxy
+  blockinfile:
+    path: /etc/systemd/system/docker.service.d/http-proxy.conf
+    create: yes
+    block: |
+      [Service]
+      Environment="HTTP_PROXY=http://wwwproxy.unimelb.edu.au:8000"
+
+- name: Restart system daemon
+  shell: "systemctl daemon-reload"
+
+- name: Restart Docker
+  systemd:
+    name: docker
+    state: restarted
+  become: yes
+
+- name: Transfer CouchDB configuration file (ini)
+  template:
+    src: local_ini.j2
+    dest: /home/ubuntu/local.ini
+    force: yes
+
+- name: Transfer CouchDB configuration file (vm_args)
+  template:
+    src: vm_args.j2
+    dest: /home/ubuntu/vm.args
+    force: yes
+
+- name: Assert CouchDB Docker instance is running
+  shell: "docker start couch"
+  no_log: true
+  ignore_errors: true
+  register: docker_start
+  become: yes
+
+- name: Create CouchDB container.
+  docker_container:
+    name: couch
+    image: couchdb:latest
+    state: started
+    restart: yes
+    volumes:
+      - "/home/ubuntu/vm.args:/opt/couchdb/etc/vm.args"
+      - "/home/ubuntu/local.ini:/opt/couchdb/etc/local.ini"
+      - "/data/couchdb:/opt/couchdb/data"
+    published_ports:
+      - "5984:5984"
+      - "5986:5986"
+      - "4369:4369"
+      - "9100-9150:9100-9150"
+    env:
+      COUCHDB_USER: "{{ couchdb_user }}"
+      COUCHDB_PASSWORD: "{{ couchdb_passwd }}"
+  when: docker_start.rc != 0
+  become: yes
+
+# Note: Sometimes the below method is the only way to get it to work.
+# - name: Start the CouchDB docker
+#   shell: "docker run \
+#     --restart=always \
+#     -p 5984:5984 \
+#     -p 5986:5986 \
+#     -p 4369:4369 \
+#     -p 9100-9150:9100-9150 \
+#     -e COUCHDB_USER={{ couchdb_user }} \
+#     -e COUCHDB_PASSWORD={{ couchdb_passwd }} \
+#     -v /home/ubuntu/vm.args:/opt/couchdb/etc/vm.args \
+#     -v /home/ubuntu/local.ini:/opt/couchdb/etc/local.ini \
+#     -v /data/couchdb:/opt/couchdb/data \
+#     --name couch \
+#     -d couchdb:latest"
+#   when: docker_start.rc != 0
+#   become: yes
+
+- name: Wait for CouchDB instances to fully deploy
+  pause:
+    seconds: 10
+  when: docker_start.rc != 0
+# - name: Enable CouchDB instance to be available to join cluster
+#   shell: >
+#     curl -X POST -H "Content-Type: application/json"
+#     http://{{ couchdb_user }}:{{ couchdb_passwd }}@localhost:5984/_cluster_setup
+#     -d '{"action": "enable_cluster", "bind_address":"0.0.0.0",
+#     "username": "{{ couchdb_user }}", "password":"{{ couchdb_passwd }}",
+#     "node_count":"{{ groups['all'] | length }}"}'
+#   when: docker_start.rc != 0

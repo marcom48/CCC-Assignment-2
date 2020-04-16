@@ -1,0 +1,20 @@
+---
+- name: Install Node.js.
+  apt:
+    name: ["build-essential", "nodejs"]
+    state: latest
+    update_cache: yes
+
+- name: Install npm packages.
+  shell: >
+    npm install
+  args:
+    executable: /bin/bash
+    chdir: /home/mmarasco/OneDrive/University/2020/Cluster & Cloud Computing/Test CouchDB/Mine/demosite
+
+- name: Build website.
+  shell: >
+    node --max_old_space_size=15000 /usr/bin/npm run build
+  args:
+    executable: /bin/bash
+    chdir: /home/mmarasco/OneDrive/University/2020/Cluster & Cloud Computing/Test CouchDB/Mine/demosite
