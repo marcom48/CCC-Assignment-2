@@ -12,8 +12,6 @@ def get_auth():
     return tweepy.API(auth)
     
 
-
-
 class StreamListener(tweepy.StreamListener):
 
     def on_status(self, status):
