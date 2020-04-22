@@ -1,0 +1,5 @@
+dependencies:
+  - { role: openstack_environment }
+  - { role: openstack_keypair }
+  - { role: openstack_security_groups }
+  # - { role: openstack_volumes }

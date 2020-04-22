@@ -1,0 +1,33 @@
+---
+- name: Create instances on NeCTAR
+  os_server:
+    name: "{{ item.name }}"
+    image: "{{ instance_image_comm }}"
+    key_name: "{{ keypair_name_comm }}"
+    flavor: "{{ instance_flavor_comm }}"
+    availability_zone: "{{ avail_zone_comm }}"
+    security_groups: "{{ os_all_security_groups }}"
+    network: "{{ instance_network_comm }}"
+    volumes: "{{ item.volumes }}"
+    volume_size: "{{ item.size }}"
+    auto_floating_ip: yes
+    wait: yes
+    timeout: 600
+    state: present
+  loop: "{{ instances }}"
+  register: os_instance
+
+- debug:
+    msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
+  loop: "{{ os_instance.results }}"
+  when: item.openstack is defined
+
+- name: Assert SSH configured
+  wait_for:
+    host: "{{ item.openstack.public_v4 }}"
+    port: 22
+    timeout: 600
+    search_regex: OpenSSH
+  loop: "{{ os_instance.results }}"
+  when: item.openstack is defined
+  no_log: true

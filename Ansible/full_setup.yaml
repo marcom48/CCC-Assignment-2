@@ -1,0 +1,79 @@
+---
+# Configure instances with common requirements.
+- hosts: all
+  vars_files:
+    - host_vars/general_vars.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - config_general
+    - openstack_mount
+
+# Set up CouchDB Docker container on all instances.
+- hosts: all
+  vars_files:
+    - host_vars/general_vars.yaml
+    - host_vars/db_vars.yaml
+    - host_vars/vault.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - config_db_all
+
+# Create CouchDB cluster.
+- hosts: instance_1
+  vars_files:
+    - host_vars/general_vars.yaml
+    - host_vars/db_vars.yaml
+    - host_vars/vault.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - config_db_master
+
+# Configure nginx.
+- hosts: instance_1, instance_2
+  vars_files:
+    - host_vars/general_vars.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - config_nginx
+
+# Build frontend website locally.
+- hosts: localhost
+  vars_files:
+    - host_vars/general_vars.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - build_frontend
+
+# Deply frontend build to servers.
+- hosts: instance_1, instance_2
+  vars_files:
+    - host_vars/general_vars.yaml
+    - host_vars/db_vars.yaml
+    - host_vars/vault.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  roles:
+    - config_frontend
+    - config_nginx

@@ -1,0 +1,35 @@
+---
+- name: Pull nginx:latest Docker image
+  docker_image:
+    name: nginx
+    tag: latest
+  register: nginx_pull_rst
+
+- name: Set Nginx configuration file
+  template:
+    src: conf.j2
+    dest: /root/nginx.conf
+  register: nginx_conf_rst
+
+- name: Remove existing (if any) Nginx Docker instance
+  docker_container:
+    name: nginx_server
+    state: absent
+  when: nginx_pull_rst.changed or nginx_conf_rst.changed
+
+- name: Start the Nginx docker
+  shell: >
+    docker run
+    --restart=always
+    -p 8080:8080
+    -p 80:80
+    -v /root/nginx.conf:/etc/nginx/conf.d/default.conf
+    -v /root/ccc_site/build:/var/www/ccc_site
+    --name nginx_server
+    -d nginx:latest
+  when: nginx_pull_rst.changed or nginx_conf_rst.changed
+
+- name: Wait for Nginx instances to fully deploy
+  pause:
+    seconds: 10
+  when: nginx_pull_rst.changed or nginx_conf_rst.changed

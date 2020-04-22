@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  vars_files:
+    - host_vars/creation_vars.yaml
+  gather_facts: true
+
+  roles:
+    - role: openstack_environment
+    - role: openstack_security_groups
+    - role: openstack_keypair
+    - role: openstack_instances
