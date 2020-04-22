@@ -1,0 +1,7 @@
+---
+- name: Initialise keypair
+  os_keypair:
+    name: "{{ keypair_name_comm }}"
+    timeout: 600
+    wait: yes
+    state: present
