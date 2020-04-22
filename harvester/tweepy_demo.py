@@ -46,8 +46,8 @@ def start_listener(twitter_listener, locations):
         api = get_auth()
         tweepy_stream = tweepy.Stream(api.auth, twitter_listener)
 
-        # Set location. Must have filter for it to start
-        tweepy_stream.filter(locations = [140.9619,-39.1985,150.0333,-33.9808])
+        # Set location. Must have filter for it to start. This is melbourne
+        tweepy_stream.filter(locations = config.melbourne)
         # tweepy_stream.filter(track="coronavirus")
     except Exception as e:
         print("Error:", e)
