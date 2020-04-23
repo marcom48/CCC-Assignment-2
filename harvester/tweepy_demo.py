@@ -5,6 +5,9 @@ import json
 import queue
 import threading
 import config
+import processor
+
+
 from typing import *
 def get_auth():
     auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
@@ -33,30 +36,22 @@ class StreamListener(tweepy.StreamListener):
             return False
 
 
-    # Method called when listener gets data
-    # def on_data(self, data):
-    #     if data[0].isdigit():
-    #         pass
-    #     else:
-    #         print(data)
-
-
 def start_listener(twitter_listener, locations):
     try:
         api = get_auth()
         tweepy_stream = tweepy.Stream(api.auth, twitter_listener)
 
-        # Set location. Must have filter for it to start. This is melbourne
-        tweepy_stream.filter(locations = config.melbourne)
-        # tweepy_stream.filter(track="coronavirus")
+        # Set location. Must have filter for it to start. This is victoria
+        # tweepy_stream.filter(locations = config.victoria)
+        tweepy_stream.filter(track="coronavirus")
+
     except Exception as e:
         print("Error:", e)
 
 # Add tweets to database
 def save_tweet(db: database.DBHelper, tweet: Dict[str, Any]):
     db.add_tweet(tweet)
-    db.add_user(tweet["user"]["id_str"], tweet["user"]["screen_name"])
-    exit()
+    db.add_user(tweet["user"]["id_str"], tweet["user"]["screen_name"], tweet["id_str"])
 
 
 # Create job queue
@@ -65,7 +60,8 @@ q = queue.Queue()
 twitter_listener = StreamListener(q)
 db = database.DBHelper()
 
-# Start listening. Needs to be in thread.
+
+# Start listening
 threading.Thread(target=start_listener, args=(twitter_listener, None)).start()
 
 

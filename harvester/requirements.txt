@@ -1,0 +1,5 @@
+tweepy
+pytz
+datetime
+shapely
+couchdb
