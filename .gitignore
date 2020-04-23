@@ -1,0 +1,8 @@
+/.vscode/
+harvester/SECRETS.env
+harvester/bin/
+harvester/install/
+harvester/lib/
+harvester/lib64
+harvester/pyvenv.cfg
+harvester/.vscode/
