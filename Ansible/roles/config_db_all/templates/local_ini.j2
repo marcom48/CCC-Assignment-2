@@ -1,5 +1,10 @@
 [chttpd]
 bind_address = 0.0.0.0
 
+[couchdb]
+uuid = {{ couchdb_uuid }}
+
+
 [couch_httpd_auth]
 secret = {{ couchdb_http_secret }}
+

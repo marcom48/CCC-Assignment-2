@@ -32,9 +32,11 @@ class StreamListener(tweepy.StreamListener):
     def on_error(self, status_code):
         print("Listener error")
         if status_code == 420:
-            #returning False in on_error disconnects the stream
-            return False
 
+            # Rate limited
+            return False
+        # Reconnect
+        return True
 
 def start_listener(twitter_listener, locations):
     try:
@@ -42,8 +44,8 @@ def start_listener(twitter_listener, locations):
         tweepy_stream = tweepy.Stream(api.auth, twitter_listener)
 
         # Set location. Must have filter for it to start. This is victoria
-        # tweepy_stream.filter(locations = config.victoria)
-        tweepy_stream.filter(track="coronavirus")
+        tweepy_stream.filter(locations = config.victoria)
+        # tweepy_stream.filter(track="coronavirus")
 
     except Exception as e:
         print("Error:", e)
@@ -66,6 +68,7 @@ threading.Thread(target=start_listener, args=(twitter_listener, None)).start()
 
 
 # Number of API errors
+# Move this into the listener?
 error_count = 0
 
 
@@ -80,6 +83,10 @@ while True:
         except Exception as e:
             print("Save error", e)
             error_count += 1
+            if error_count> 100:
+                # Stops us from being rate limited
+                print("Too many errors")
+                system.exit()
 
 
     except queue.Empty:

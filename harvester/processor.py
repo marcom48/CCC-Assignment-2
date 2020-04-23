@@ -46,7 +46,7 @@ class TweetProcessor():
             
             # User details
             userId = tweet["user"]["id_str"]
-            username = tweet["user"]["screenName"]
+            username = tweet["user"]["screen_name"]
             tweet_doc["user"] = {"id": userId, "screenName": username}
 
             tweet_doc["hashtags"] = [i["text"] for i in tweet["entities"]["hashtags"]]
