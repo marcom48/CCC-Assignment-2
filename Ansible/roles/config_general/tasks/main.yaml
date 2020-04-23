@@ -37,6 +37,7 @@
 - name: Activate NTP service
   shell: timedatectl set-ntp on
 
+  # Do we need all those packages
 - name: Install general packages
   apt:
     name:

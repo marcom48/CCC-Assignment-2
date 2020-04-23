@@ -47,7 +47,7 @@
     dest: /home/ubuntu/vm.args
     force: yes
 
-- name: Assert CouchDB Docker instance is running
+- name: Assert CouchDB Docker instance is running (will fail if not running)
   shell: "docker start couch"
   no_log: true
   ignore_errors: true
@@ -95,7 +95,7 @@
 
 - name: Wait for CouchDB instances to fully deploy
   pause:
-    seconds: 10
+    seconds: 30
   when: docker_start.rc != 0
 # - name: Enable CouchDB instance to be available to join cluster
 #   shell: >
@@ -104,4 +104,4 @@
 #     -d '{"action": "enable_cluster", "bind_address":"0.0.0.0",
 #     "username": "{{ couchdb_user }}", "password":"{{ couchdb_passwd }}",
 #     "node_count":"{{ groups['all'] | length }}"}'
-#   when: docker_start.rc != 0
+# when: docker_start.rc != 0
