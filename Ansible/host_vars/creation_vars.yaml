@@ -21,16 +21,18 @@ security_groups:
 keypair_name_comm: Marco_Demo_Key
 keypair_public_key_file_comm: /home/mmarasco/Marco_Demo_Key.pem
 
+volumes:
+  - vol_name: first-vol
+    vol_size: 20
+  - vol_name: second-vol
+    vol_size: 20
+  - vol_name: third-vol
+    vol_size: 20
+  - vol_name: fourth-vol
+    vol_size: 20
+
 instances:
   - name: instance_1
-    volumes: ["instance_1-vol"]
-    size: 10
   - name: instance_2
-    volumes: ["instance_2-vol"]
-    size: 10
   - name: instance_3
-    volumes: ["instance_3-vol"]
-    size: 10
   - name: instance_4
-    volumes: ["instance_4-vol"]
-    size: 10

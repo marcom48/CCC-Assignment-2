@@ -1,0 +1,36 @@
+- name: Transfer harvester application
+  copy:
+    src: /home/mmarasco/Repositories/CCC-Assignment-2/harvester
+    dest: /home/ubuntu
+    directory_mode: yes
+    force: yes
+    owner: ubuntu
+    mode: "755"
+
+- name: Remove existing harvester
+  docker_container:
+    name: harvester_{{ ansible_hostname }}
+    state: absent
+# # SET DOCKER PROXY
+# - name: Build harvester
+#   shell: docker build -t stream .
+#   args:
+#     chdir: /home/ubuntu/harvester
+#   become: yes
+
+# - name: Start harvester
+#   docker_container:
+#     name: harvester_{{ ansible_hostname }}
+#     image: stream
+#     network_mode: host
+#     state: started
+#     restart: yes
+#     env:
+#       COUCHDB_USER: "{{ couchdb_user }}"
+#       COUCHDB_PASSWORD: "{{ couchdb_passwd }}"
+#       NODE_ID: "{{ ansible_hostname }}"
+#       TWITTER_CONSUMER_KEY: "{{ TWITTER_CONSUMER_KEY }}"
+#       TWITTER_CONSUMER_SECRET: "{{ TWITTER_CONSUMER_SECRET }}"
+#       TWITTER_ACCESS_TOKEN: "{{ TWITTER_ACCESS_TOKEN }}"
+#       TWITTER_ACCESS_TOKEN_SECRET: "{{ TWITTER_ACCESS_TOKEN_SECRET }}"
+#   become: yes
