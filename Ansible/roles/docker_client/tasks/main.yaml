@@ -1,0 +1,86 @@
+---
+
+- name: Start Watchtower
+  docker_container:
+    name: ccc_watchtower_{{ ansible_hostname }}
+    image: containrrr/watchtower
+    state: started
+    restart: no
+    env:
+      http_proxy: http://wwwproxy.unimelb.edu.au:8000
+      https_proxy: http://wwwproxy.unimelb.edu.au:8000
+      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
+      WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL: https://hooks.slack.com/services/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
+      WATCHTOWER_NOTIFICATION_SLACK_IDENTIFIER: watchtower-server-1
+      WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#deployment"
+      WATCHTOWER_NOTIFICATION_SLACK_ICON_EMOJI: ":male_mage:"
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  become: yes
+
+- name: Start NGINX
+  docker_container:
+    name: nginx_proxy_{{ ansible_hostname }}
+    image: kvoli/nginx-proxy
+    state: started
+    restart: no
+    published_ports:
+    - "80:80"
+    - "443:443"
+    env:
+      http_proxy: http://wwwproxy.unimelb.edu.au:8000
+      https_proxy: http://wwwproxy.unimelb.edu.au:8000
+      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
+    volumes:
+    - /etc/nginx/certs
+    - /etc/nginx/vhost.d
+    - /usr/share/nginx/html
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+  become: yes
+
+- name: Start NGINX LETSENCRPYT
+  docker_container:
+    name: nginx_proxy_encrypt_{{ ansible_hostname }}
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    state: started
+    restart: no
+    debug: yes
+    env:
+      http_proxy: http://wwwproxy.unimelb.edu.au:8000
+      https_proxy: http://wwwproxy.unimelb.edu.au:8000
+      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
+      DEFAULT_EMAIL: amccleron@student.unimelb.edu.au
+    volumes_from:
+    - nginx_proxy_{{ ansible_hostname }}
+    volumes:
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+  become: yes
+
+- name: Start Client
+  docker_container:
+    name: ccc_client_{{ ansible_hostname }}
+    image: kvoli/ccc-client:latest
+    state: started
+    restart: yes
+    ports:
+    - "8000:5000"
+    env:
+      COUCHDB_USER: "{{ couchdb_user }}"
+      COUCHDB_PASSWORD: "{{ couchdb_passwd }}"
+      NODE_ID: "{{ ansible_hostname }}"
+      VIRTUAL_HOST: a.unimelb-comp90024-2020-grp-11.cloud.edu.au
+      VIRTUAL_PORT: "8000"
+      LETSENCRYPT_HOST: a.unimelb-comp90024-2020-grp-11.cloud.edu.au
+      LETSENCRYPT_EMAIL: amcclernon@student.unimelb.edu.au
+      http_proxy: http://wwwproxy.unimelb.edu.au:8000
+      https_proxy: http://wwwproxy.unimelb.edu.au:8000
+      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
+  become: yes
