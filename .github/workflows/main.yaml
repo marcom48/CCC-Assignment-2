@@ -1,0 +1,19 @@
+
+name: Package docker
+
+on: [push]
+
+jobs:
+  build:
+    name: build latest docker image
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with: 
+          name: kvoli/ccc-client
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: src/client/
