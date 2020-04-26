@@ -35,4 +35,9 @@
       TWITTER_CONSUMER_SECRET: "{{ TWITTER[ansible_hostname].TWITTER_CONSUMER_SECRET }}"
       TWITTER_ACCESS_TOKEN: "{{ TWITTER[ansible_hostname].TWITTER_ACCESS_TOKEN }}"
       TWITTER_ACCESS_TOKEN_SECRET: "{{ TWITTER[ansible_hostname].TWITTER_ACCESS_TOKEN_SECRET }}"
+      http_proxy: http://wwwproxy.unimelb.edu.au:8000
+      https_proxy: http://wwwproxy.unimelb.edu.au:8000
+      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
   become: yes
