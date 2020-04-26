@@ -24,38 +24,38 @@ class DBHelper:
             self.server.create("users")
             self.db_users = self.server["users"]
 
-    
-    def add_tweet(self, tweet) -> None:
+    def has_user(self, user_id) -> bool:
+        if self.db_users.get(user_id):
+            return True
+        return False
+
+    def add_tweet(self, tweet) -> bool:
         # Remove duplicates
         if not self.db_tweets.get(tweet["id_str"]):
 
             data = self.tweetProcessor.process_tweet(tweet)
-
             if data:
                 self.db_tweets[tweet["id_str"]] = data
+                return True
+
+        return False
 
 
-    def add_user(self, user_id, user_handle, last_tweet) -> None:
+    def add_user(self, user_id, user_handle, last_tweet) -> bool:
         
-        user_doc = self.db_users.get(user_id)
-        if not user_doc:
-            data = {
-                '_id': user_id,
-                'screenName': user_handle,
-                "harvestTime": int(time.time()),
-                "harvestNode": self.id,
-                "lastTweet": last_tweet,
-                "tweetCount": 0
-            }
+        # Add in processor method
+        data = {
+            '_id': user_id,
+            'screenName': user_handle,
+            "harvestTime": int(time.time()),
+            "harvestNode": self.id,
+            "lastTweet": last_tweet,
+            "tweetCount": 0 # THIS IS FALSE FOR NEW SEARCH METHOD
+        }
 
-            self.db_users[user_id] = data
-
-        else:
-            user_doc["lastTweet"] = last_tweet
-            user_doc["tweetCount"] = user_doc["tweetCount"] + 1
-            self.db_users.save(user_doc)
+        self.db_users[user_id] = data
 
 
-        
+    
 
-        
+    
