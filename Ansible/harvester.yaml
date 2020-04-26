@@ -3,7 +3,6 @@
 - hosts: instance_3, instance_4
   vars_files:
     - host_vars/general_vars.yaml
-    - host_vars/db_vars.yaml
     - host_vars/vault.yaml
   gather_facts: true
   remote_user: ubuntu

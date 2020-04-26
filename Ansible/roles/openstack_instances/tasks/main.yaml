@@ -17,8 +17,8 @@
     - "{{ instances }}"
     - "{{ openstack_vols }}"
   register: os_instance
-  no_log: true
 
+  # no_log: true
 - debug:
     msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
   loop: "{{ os_instance.results }}"

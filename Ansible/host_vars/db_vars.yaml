@@ -1,5 +1,0 @@
----
-couchdb_user: "{{ vault_couchdb_user }}"
-couchdb_passwd: "{{ vault_couchdb_passwd }}"
-couchdb_cookie: "{{ vault_couchdb_cookie }}"
-couchdb_http_secret: "{{ vault_couchdb_http_secret }}"
