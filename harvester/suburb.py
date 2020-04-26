@@ -1,6 +1,7 @@
 from shapely.geometry import shape, Point, polygon
 import json
-
+import random
+from config import victoria
 
 class SuburbProcessor():
     def __init__(self):
@@ -11,7 +12,7 @@ class SuburbProcessor():
     
         suburbDict = {}
 
-        with open('melbourne.geojson') as file:
+        with open('data/melbourne.geojson') as file:
             file_data = json.load(file)
 
             for i in file_data['features']:
@@ -53,23 +54,25 @@ class SuburbProcessor():
                 latitude = tweet["coordinates"]["coordinates"][1]
             else:
                 
-                # Tweet doesn't have a specific place. Find middle of bounding box
+
                 # long_min = float(tweet["place"]["bounding_box"]["coordinates"][0][0][0])
                 # long_max = float(tweet["place"]["bounding_box"]["coordinates"][0][1][0])
                 
                 # lat_min = float(tweet["place"]["bounding_box"]["coordinates"][0][0][1])
                 # lat_max = float(tweet["place"]["bounding_box"]["coordinates"][0][2][1])
 
-                # longitude = (long_min + long_max) / 2
-                # latitude = (lat_min + lat_max) / 2
-
+                # Randomise.
+                # longitude = random.uniform(victoria[0], victoria[2])
+                # latitude = random.uniform(victoria[1], victoria[3])
                 return None, None, None
             
             location = Point(longitude, latitude)
+ 
 
             return longitude, latitude, self.find_suburb(location)
 
-        except:
+        except Exception as e:
+            print(e)
             return None, None, None
 
     def find_suburb(self, location):
@@ -84,5 +87,4 @@ class SuburbProcessor():
 
                     if polygon.contains(location):
                         return self.suburbDict[sub]["name"]
-
         return None

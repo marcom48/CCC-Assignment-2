@@ -2,26 +2,26 @@
 - name: Initialise CouchDB cluster (1/3)
   shell: >
     curl -X POST -H "Content-Type: application/json"
-    http://{{ couchdb_user }}:{{ couchdb_passwd }}@localhost:5984/_cluster_setup
+    http://{{ vault_couchdb_user }}:{{ vault_couchdb_password }}@localhost:5984/_cluster_setup
     -d "{"action": "enable_cluster", "bind_address": "0.0.0.0",
-    "username": "{{ couchdb_user }}", "password":"{{ couchdb_passwd }}",
+    "username": "{{ vault_couchdb_user }}", "password":"{{ vault_couchdb_password }}",
     "port": 5984, "node_count": "{{ groups['all'] | length }}",
     "remote_node": "{{ hostvars[item]['ansible_host'] }}",
-    "remote_current_user": "{{ couchdb_user }}", "remote_current_password": "{{ couchdb_passwd }}" }"
+    "remote_current_user": "{{ vault_couchdb_user }}", "remote_current_password": "{{ vault_couchdb_password }}" }"
   loop: "{{ groups['all'] }}"
   when: item != ansible_hostname
 
 - name: Initialise CouchDB cluster (2/3)
   shell: >
     curl -X POST -H "Content-Type: application/json"
-    http://{{ couchdb_user }}:{{ couchdb_passwd }}@localhost:5984/_cluster_setup
+    http://{{ vault_couchdb_user }}:{{ vault_couchdb_password }}@localhost:5984/_cluster_setup
     -d '{"action": "add_node", "host": "{{ hostvars[item]['ansible_host'] }}",
-    "port": 5984, "username": "{{ couchdb_user }}", "password":"{{ couchdb_passwd }}"}'
+    "port": 5984, "username": "{{ vault_couchdb_user }}", "password":"{{ vault_couchdb_password }}"}'
   loop: "{{ groups['all'] }}"
   when: item != ansible_hostname
 
 - name: Initialise CouchDB cluster (3/3)
   shell: >
     curl -X POST -H "Content-Type: application/json"
-    http://{{ couchdb_user }}:{{ couchdb_user }}@localhost:5984/_cluster_setup
+    http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/_cluster_setup
     -d '{"action": "finish_cluster"}'

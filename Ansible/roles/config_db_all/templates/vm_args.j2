@@ -11,7 +11,7 @@
 # the License.
 
 -name couchdb@{{ ansible_default_ipv4.address }}
--setcookie {{ couchdb_cookie }}
+-setcookie {{ vault_couchdb_cookie }}
 
 # Ensure that the Erlang VM listens on a known port
 -kernel inet_dist_listen_min 9100
