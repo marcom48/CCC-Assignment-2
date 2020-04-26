@@ -8,8 +8,8 @@
     ports:
     - "8000:5000"
     env:
-      COUCHDB_USER: "{{ couchdb_user }}"
-      COUCHDB_PASSWORD: "{{ couchdb_passwd }}"
+      COUCHDB_USER: "{{ vault_couchdb_user }}"
+      COUCHDB_PASSWORD: "{{ vault_couchdb_password }}"
       NODE_ID: "{{ ansible_hostname }}"
       VIRTUAL_HOST: a.unimelb-comp90024-2020-grp-11.cloud.edu.au
       VIRTUAL_PORT: "8000"

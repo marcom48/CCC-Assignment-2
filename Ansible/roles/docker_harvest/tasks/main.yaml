@@ -1,7 +1,7 @@
 ---
 - name: Transfer harvester application
   copy:
-    src: /home/mmarasco/Repositories/CCC-Assignment-2/harvester
+    src: ../harvester
     dest: /home/ubuntu
     directory_mode: yes
     force: yes
@@ -15,7 +15,7 @@
 
 # SET DOCKER PROXY
 - name: Build harvester
-  shell: docker build -t  stream .
+  shell: docker build -t  kvoli/ccc-stream .
   args:
     chdir: /home/ubuntu/harvester
   become: yes
@@ -23,7 +23,7 @@
 - name: Start harvester
   docker_container:
     name: "{{ ansible_hostname }}_harvester"
-    image: stream
+    image: kvoli/ccc-stream
     network_mode: host
     state: started
     restart: yes
