@@ -1,6 +1,6 @@
 ---
 # Configure instances with common requirements.
-- hosts: instance_3, instance_4
+- hosts: instance_2, instance_3, instance_4
   vars_files:
     - host_vars/general_vars.yaml
     - host_vars/db_vars.yaml
@@ -11,4 +11,6 @@
   become_method: sudo
 
   roles:
+    - config_watchtower
     - docker_harvest
+    - slack_notification
