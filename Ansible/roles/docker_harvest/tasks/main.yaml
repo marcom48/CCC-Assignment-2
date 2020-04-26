@@ -1,29 +1,29 @@
 ---
-- name: Transfer harvester application
-  copy:
-    src: /home/mmarasco/Repositories/CCC-Assignment-2/harvester
-    dest: /home/ubuntu
-    directory_mode: yes
-    force: yes
-    owner: ubuntu
-    mode: "755"
+# - name: Transfer harvester application
+#   copy:
+#     src: ../harvester
+#     dest: /home/ubuntu
+#     directory_mode: yes
+#     force: yes
+#     owner: ubuntu
+#     mode: "755"
 
 - name: Remove existing harvester
   docker_container:
     name: "{{ ansible_hostname }}_harvester"
     state: absent
 
-# SET DOCKER PROXY
-- name: Build harvester
-  shell: docker build -t  stream .
-  args:
-    chdir: /home/ubuntu/harvester
-  become: yes
+# # SET DOCKER PROXY
+# - name: Build harvester
+#   shell: docker build -t  kvoli/ccc-stream .
+#   args:
+#     chdir: /home/ubuntu/harvester
+#   become: yes
 
 - name: Start harvester
   docker_container:
     name: "{{ ansible_hostname }}_harvester"
-    image: stream
+    image: kvoli/ccc-stream
     network_mode: host
     state: started
     restart: yes
@@ -35,4 +35,9 @@
       TWITTER_CONSUMER_SECRET: "{{ TWITTER[ansible_hostname].TWITTER_CONSUMER_SECRET }}"
       TWITTER_ACCESS_TOKEN: "{{ TWITTER[ansible_hostname].TWITTER_ACCESS_TOKEN }}"
       TWITTER_ACCESS_TOKEN_SECRET: "{{ TWITTER[ansible_hostname].TWITTER_ACCESS_TOKEN_SECRET }}"
+      http_proxy: http://wwwproxy.unimelb.edu.au:8000
+      https_proxy: http://wwwproxy.unimelb.edu.au:8000
+      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
   become: yes

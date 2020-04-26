@@ -10,10 +10,18 @@ jobs:
     steps: 
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - name: Publish to Registry
+      - name: Publish to Client to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with: 
           name: kvoli/ccc-client
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           workdir: src/client/
+      - name: Publish to Harvester to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with: 
+          name: kvoli/ccc-stream
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: harvester/
+      
