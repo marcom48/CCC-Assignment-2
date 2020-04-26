@@ -3,3 +3,4 @@ pytz
 datetime
 shapely
 couchdb
+textblob
