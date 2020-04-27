@@ -42,6 +42,7 @@ class SuburbProcessor():
 
                         suburbDict[_id]['polygons'].append(polygon.Polygon([(x,y) for x,y in coordinates[0]]))
 
+
         return suburbDict
 
 
@@ -54,16 +55,10 @@ class SuburbProcessor():
                 latitude = tweet["coordinates"]["coordinates"][1]
             else:
                 
-
-                # long_min = float(tweet["place"]["bounding_box"]["coordinates"][0][0][0])
-                # long_max = float(tweet["place"]["bounding_box"]["coordinates"][0][1][0])
-                
-                # lat_min = float(tweet["place"]["bounding_box"]["coordinates"][0][0][1])
-                # lat_max = float(tweet["place"]["bounding_box"]["coordinates"][0][2][1])
-
                 # Randomise.
                 # longitude = random.uniform(VICTORIA[0], VICTORIA[2])
                 # latitude = random.uniform(VICTORIA[1], VICTORIA[3])
+                
                 return None, None, None
             
             location = Point(longitude, latitude)

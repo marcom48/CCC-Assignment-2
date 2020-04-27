@@ -13,7 +13,7 @@ def get_auth():
 
 
 def main():
-
+    
     api = get_auth()
     error_count = 0
     tweet_queue = Queue()

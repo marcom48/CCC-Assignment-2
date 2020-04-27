@@ -4,6 +4,7 @@ import database
 import json
 import queue
 import threading
+from time import time
 from config import VICTORIA
 import sys
 
@@ -35,8 +36,6 @@ class StreamListener(tweepy.StreamListener):
 
 
 
-    
-
 def start_listener(api, twitter_listener):
     try:
         tweepy_stream = tweepy.Stream(api.auth, twitter_listener)
@@ -50,19 +49,16 @@ def start_listener(api, twitter_listener):
 
 
 
-
-def save_tweet(tweet, user_queue):
+def save_tweet(db, tweet, user_queue):
 
     # Check if user tweets with location on
     valid_user = db.add_tweet(tweet)
 
-    # Check if seen user before
-    if valid_user and not db.has_user(tweet["user"]["id_str"]):
-
-        db.add_user(tweet["user"]["id_str"], tweet["user"]["screen_name"], tweet["id_str"])
-
-        
+    # Add user with location to queue
+    if valid_user:
+        print("added user to queue")
         user_queue.put(tweet["user"]["id_str"])
+
         # Can only get 200 tweets from a user at a time. Add for loop to increase.
         # for i in range(5):
         # search_user(tweet["user"]["id_str"])
@@ -70,7 +66,7 @@ def save_tweet(tweet, user_queue):
 def main(api, tweet_queue, user_queue, error_count):
 
     
-    global db
+    
     db = database.DBHelper()
     
     twitter_listener = StreamListener(tweet_queue)
@@ -87,8 +83,7 @@ def main(api, tweet_queue, user_queue, error_count):
             tweet = tweet_queue.get()
 
             try:
-
-                save_tweet(tweet, user_queue)
+                save_tweet(db, tweet, user_queue)
                 
             except Exception as e:
                 print("Save error", e)
@@ -98,8 +93,7 @@ def main(api, tweet_queue, user_queue, error_count):
                     print("Too many errors")
                     sys.exit()
 
-
         except queue.Empty:
-            time.sleep(2)
+            time.sleep(5)
             continue
 
