@@ -5,7 +5,7 @@ import time
 import config
 import json
 import traceback
-
+import sentiment
     
 def init():
     suburb.init()
@@ -14,6 +14,7 @@ class TweetProcessor():
 
     def __init__(self):
         self.subProcessor = suburb.SuburbProcessor()
+        self.sentimentAnalyser = sentiment.SentimentAnalyser()
 
 
     def process_tweet(self, tweet) -> dict:
@@ -42,9 +43,11 @@ class TweetProcessor():
             tweet_time = tweet_time.replace(tzinfo=timezone.utc).astimezone(pytz.timezone('Australia/Melbourne')).isoformat()
             tweet_doc["created_at"] = tweet_time
 
-            # Clean for sentiment analysis?
-            tweet_doc["text"] = tweet["text"]
             
+            tweet_doc["text"] = tweet["text"]
+
+            tweet_doc["sentiment"] = self.sentimentAnalyser(tweet["text"])
+
             # User details
             userId = tweet["user"]["id_str"]
             username = tweet["user"]["screen_name"]

@@ -11,6 +11,7 @@ class DBHelper:
         self.id = config.NODE_ID
 
         self.tweetProcessor = processor.TweetProcessor()
+
         # Assert databases initialised.
         try:
             self.db_tweets = self.server["tweets"]

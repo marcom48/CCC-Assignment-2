@@ -59,9 +59,6 @@ def save_tweet(db, tweet, user_queue):
         print("added user to queue")
         user_queue.put(tweet["user"]["id_str"])
 
-        # Can only get 200 tweets from a user at a time. Add for loop to increase.
-        # for i in range(5):
-        # search_user(tweet["user"]["id_str"])
 
 def main(api, tweet_queue, user_queue, error_count):
 
@@ -83,6 +80,7 @@ def main(api, tweet_queue, user_queue, error_count):
             tweet = tweet_queue.get()
 
             try:
+
                 save_tweet(db, tweet, user_queue)
                 
             except Exception as e:
