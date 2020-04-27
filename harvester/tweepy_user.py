@@ -13,18 +13,18 @@ def search_user(api, db, user_id):
 
         # Get tweets from different date ranges
 
-        for _ in range(10):
+        for _ in range(4):
    
 
             tweets_old = tweepy.Cursor(api.user_timeline, id=user_id, \
-                since_id=config.TWEET_DEC2018, max_id=config.TWEET_APR2019).items(config.SEARCH_LIMIT)
+                since_id=config.TWEET_DEC2018, max_id=config.TWEET_APR2019).items(config.FIRST_SEARCH_LIMIT)
 
             for i in tweets_old:
                 results.append(i._json)
 
 
             tweets_new = tweepy.Cursor(api.user_timeline, id=user_id, \
-                since_id=config.TWEET_DEC2019).items(config.SEARCH_LIMIT)
+                since_id=config.TWEET_DEC2019).items(config.FIRST_SEARCH_LIMIT)
 
             for i in tweets_new:
                 results.append(i._json)
