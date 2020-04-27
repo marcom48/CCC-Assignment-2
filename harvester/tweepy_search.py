@@ -9,6 +9,9 @@ import time
 
 def main(api, tweet_queue, error_count):
 
+    # Sleep 1 window when restarting
+    time.sleep(20 * 60)
+
     while True:
         for i in range(150):
             for tweet in api.search(geocode=config.VICTORIA_RADIUS, count=100, since_id = config.TWEET_DEC2019):
