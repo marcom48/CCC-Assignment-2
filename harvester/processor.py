@@ -7,8 +7,6 @@ import json
 import traceback
 import sentiment
     
-def init():
-    suburb.init()
 
 class TweetProcessor():
 
@@ -46,7 +44,7 @@ class TweetProcessor():
             
             tweet_doc["text"] = tweet["text"]
 
-            tweet_doc["sentiment"] = self.sentimentAnalyser(tweet["text"])
+            tweet_doc["sentiment"] = self.sentimentAnalyser.analyse(tweet["text"])
 
             # User details
             userId = tweet["user"]["id_str"]

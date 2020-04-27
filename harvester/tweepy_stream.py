@@ -56,7 +56,7 @@ def save_tweet(db, tweet, user_queue):
 
     # Add user with location to queue
     if valid_user:
-        print("added user to queue")
+
         user_queue.put(tweet["user"]["id_str"])
 
 
