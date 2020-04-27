@@ -9,17 +9,18 @@ import time
 
 def main(api, tweet_queue, error_count):
 
+    # Sleep 1 window when restarting
+    time.sleep(20 * 60)
+
     while True:
-        for tweet in api.search(geocode=config.VICTORIA_RADIUS, count=100, since_id = config.TWEET_DEC2019):
-            try:
+        for i in range(150):
+            for tweet in api.search(geocode=config.VICTORIA_RADIUS, count=100, since_id = config.TWEET_DEC2019):
+
                 # Look for tweet
                 tweet_queue.put(tweet._json)
 
-            except queue.Empty:
-                time.sleep(10)
-                continue
-        
-        time.sleep(1800)
+
+        time.sleep(20 * 60)
 # api = harvest.get_auth()
 # for tweet in api.search(geocode=config.VICTORIA_RADIUS, count=1, since_id = config.TWEET_DEC2019):
 #     print(tweet._json)
