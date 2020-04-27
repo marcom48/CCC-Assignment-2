@@ -4,7 +4,7 @@ import database
 import json
 import queue
 import threading
-from time import time
+import time
 from config import VICTORIA
 import sys
 

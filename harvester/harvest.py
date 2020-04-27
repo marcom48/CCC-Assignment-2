@@ -1,6 +1,7 @@
 import tweepy
 import tweepy_stream
 import tweepy_user
+import tweepy_search
 from queue import Queue
 import threading
 import config
@@ -22,6 +23,7 @@ def main():
     # Start harvesting threads
     threading.Thread(target=tweepy_stream.main, args=(api, tweet_queue, user_queue, error_count,)).start()
     threading.Thread(target=tweepy_user.main, args=(api, user_queue, error_count,)).start()
+    threading.Thread(target=tweepy_search.main, args=(api, tweet_queue, error_count,)).start()
 
 if __name__ == "__main__":
     main()

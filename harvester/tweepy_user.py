@@ -2,7 +2,7 @@ import tweepy
 import config
 import database
 import sys
-from time import time
+import time
 
 def search_user(api, db, user_id):
 
