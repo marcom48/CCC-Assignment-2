@@ -33,3 +33,12 @@
 - name: Create User database
   shell: >
     curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/users
+
+
+- name: Create Location database
+  shell: >
+  curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/users
+  
+- name: Create Website database
+  shell: >
+    curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/users
