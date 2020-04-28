@@ -10,7 +10,7 @@ import time
 def main(api, tweet_queue, error_count):
 
     # Sleep 1 window when restarting
-    # time.sleep(20 * 60)
+    time.sleep(20 * 60)
 
     # Scrape all tweets in last week VIC.
     # Assume all people in this scrape are Melbournians due to travel bans.
