@@ -5,7 +5,6 @@ class SentimentAnalyser:
 
         self.analyser = SentimentIntensityAnalyzer()
 
-            
     def analyse(self, tweet):
 
         try:

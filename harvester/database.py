@@ -66,13 +66,14 @@ class DBHelper:
         # Remove duplicates
         if not self.db_tweets.get(tweet["id_str"]):
 
-            data = self.tweetProcessor.process_tweet(tweet)
+            data, has_location = self.tweetProcessor.process_tweet(tweet)
             
             if data:
                 self.db_tweets[tweet["id_str"]] = data
 
                 # Record user
                 user_id = tweet["user"]["id_str"]
+
                 if not self.db_users.get(user_id):
                     self.add_user(user_id, tweet["user"]["screen_name"], tweet["id_str"])
 
@@ -82,17 +83,16 @@ class DBHelper:
 
 
                 return True
+            else:
+                print("Couldn't add tweet")
+
+
 
         return False
 
 
     def add_user(self, user_id, user_handle, last_tweet) -> None:
 
-
-        # If haven't seen user, add document
-        # else, update lastTweet ID
-        
-        
         # Add in processor method
         data = {
             '_id': user_id,

@@ -33,8 +33,10 @@ class TweetProcessor():
                     "latitude": latitude,
                     "suburb": _suburb
                 }
+                has_location = True
             else:
-                return None
+                tweet_doc["location"] = {}
+                has_location = False
 
             # Convert to ISO 8601
             tweet_time = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S %z %Y')
@@ -56,12 +58,12 @@ class TweetProcessor():
 
             # Add in extra data relevant for our topic
             
-            return tweet_doc
+            return tweet_doc, has_location
 
         except Exception as e:
             print("Process error:",e)
             print(traceback.format_exc())
 
-            return None
+            return None, None
 
 

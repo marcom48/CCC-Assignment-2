@@ -45,7 +45,7 @@ def start_listener(api, twitter_listener):
         # tweepy_stream.filter(track="coronavirus")
 
     except Exception as e:
-        print("Error:", e)
+        print("Start stream Error:", e)
 
 
 
@@ -71,8 +71,6 @@ def main(api, tweet_queue, user_queue, error_count):
     # Start listening
     threading.Thread(target=start_listener, args=(api, twitter_listener,)).start()
 
-    # Start thread to do a search for users who tweeted recently in Melb with location, add to quueue
-
 
     while True:
         try:
@@ -84,12 +82,13 @@ def main(api, tweet_queue, user_queue, error_count):
                 save_tweet(db, tweet, user_queue)
                 
             except Exception as e:
-                print("Save error", e)
+                print("Stream save error", e)
                 error_count += 1
                 if error_count> 100:
                     # Stops us from being rate limited
                     print("Too many errors")
-                    sys.exit()
+                    time.sleep(3600 * 3)
+                    # sys.exit()
 
         except queue.Empty:
             time.sleep(5)
