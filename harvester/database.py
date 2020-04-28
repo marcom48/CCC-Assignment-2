@@ -18,6 +18,8 @@ class DBHelper:
         except:
             try:
                 self.server.create("tweets")
+            except:
+                pass
             self.db_tweets = self.server["tweets"]
 
         try:
@@ -25,6 +27,8 @@ class DBHelper:
         except:
             try:
                 self.server.create("users")
+            except:
+                pass
             self.db_users = self.server["users"]
 
         try:
@@ -32,6 +36,8 @@ class DBHelper:
         except:
             try:
                 self.server.create("located_tweets")
+            except:
+                pass
             self.db_located = self.server["located_tweets"]
 
         try:
@@ -39,6 +45,8 @@ class DBHelper:
         except:
             try:
                 self.server.create("website")
+            except:
+                pass
             self.db_website = self.server["website"]
 
     def scraped_user(self, user_id) -> bool:
