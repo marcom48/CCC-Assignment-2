@@ -16,14 +16,30 @@ class DBHelper:
         try:
             self.db_tweets = self.server["tweets"]
         except:
-            self.server.create("tweets")
+            try:
+                self.server.create("tweets")
             self.db_tweets = self.server["tweets"]
 
         try:
             self.db_users = self.server["users"]
         except:
-            self.server.create("users")
+            try:
+                self.server.create("users")
             self.db_users = self.server["users"]
+
+        try:
+            self.db_located = self.server["located_tweets"]
+        except:
+            try:
+                self.server.create("located_tweets")
+            self.db_located = self.server["located_tweets"]
+
+        try:
+            self.db_website = self.server["website"]
+        except:
+            try:
+                self.server.create("website")
+            self.db_website = self.server["website"]
 
     def scraped_user(self, user_id) -> bool:
         try:
@@ -70,6 +86,9 @@ class DBHelper:
             
             if data:
                 self.db_tweets[tweet["id_str"]] = data
+
+                if has_location:
+                    self.db_located[tweet["id_str"]] = data
 
                 # Record user
                 user_id = tweet["user"]["id_str"]
