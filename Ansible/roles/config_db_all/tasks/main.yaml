@@ -47,12 +47,10 @@
     dest: /home/ubuntu/vm.args
     force: yes
 
-- name: Assert CouchDB Docker instance is running (will fail if not running)
-  shell: "docker start couch"
-  no_log: true
-  ignore_errors: true
-  register: docker_start
-  become: yes
+- name: Remove existing CouchDB
+  docker_container:
+    name: couch
+    state: absent
 
 - name: Create CouchDB container.
   docker_container:
@@ -72,10 +70,8 @@
     env:
       COUCHDB_USER: "{{ vault_couchdb_user }}"
       COUCHDB_PASSWORD: "{{ vault_couchdb_password }}"
-  when: docker_start.rc != 0
   become: yes
 
 - name: Wait for CouchDB instances to fully deploy
   pause:
     seconds: 30
-  when: docker_start.rc != 0

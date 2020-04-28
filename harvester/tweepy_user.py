@@ -10,7 +10,6 @@ def check_status(api):
 
     # Check if need to sleep for Twitter rate limits
     if rate_exceeded:
-        print("Sleeping until %s" % (time.strftime('%Y-%m-%d %H:%M:%S', 60 + reset - time.time())))
         time.sleep(60 + reset - time.time())
 
 
@@ -64,8 +63,6 @@ def search_user(api, db, user_id):
 
             count += 1
 
-        
-        print(f"{user_id}: {count}\n")
     except Exception as e:
         print("Error searching user", user_id)
         print(e)
