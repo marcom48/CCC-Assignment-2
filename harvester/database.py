@@ -84,7 +84,9 @@ class DBHelper:
             self.db_users[user_id] = doc
         except:
             pass
-
+    
+    def store_located(self, _id, data) -> None:
+        self.db_located[_id] = data
 
     def add_tweet(self, tweet) -> bool:
         # Remove duplicates
@@ -95,8 +97,11 @@ class DBHelper:
             if data:
                 self.db_tweets[tweet["id_str"]] = data
 
-                if has_location:
-                    self.db_located[tweet["id_str"]] = data
+                # if has_location:
+                #     # print(tweet["id_str"])
+                #     data['_id'] = data['_id'] + "_loc"
+                #     self.db_located[tweet['id_str'] + "_loc"] = data
+                    
 
                 # Record user
                 user_id = tweet["user"]["id_str"]
