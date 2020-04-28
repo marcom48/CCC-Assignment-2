@@ -25,3 +25,11 @@
     curl -X POST -H "Content-Type: application/json"
     http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/_cluster_setup
     -d '{"action": "finish_cluster"}'
+
+- name: Create Twitter database
+  shell: >
+    curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/tweets
+
+- name: Create User database
+  shell: >
+    curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/users
