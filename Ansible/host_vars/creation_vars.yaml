@@ -27,13 +27,13 @@ keypair_public_key_file_comm: /home/mmarasco/ccc_keypair.pem
 
 volumes:
   - vol_name: first-vol
-    vol_size: 20
+    vol_size: 62
   - vol_name: second-vol
-    vol_size: 20
+    vol_size: 62
   - vol_name: third-vol
-    vol_size: 20
+    vol_size: 63
   - vol_name: fourth-vol
-    vol_size: 20
+    vol_size: 63
 
 instances:
   - name: instance_1
