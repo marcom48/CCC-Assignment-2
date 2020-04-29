@@ -23,7 +23,7 @@ security_groups:
       port_range_max: 443
 
 keypair_name_comm: ccc_keypair
-keypair_public_key_file_comm: /home/mmarasco/ccc_keypair.pem
+keypair_public_key_file_comm: ~/ccc_keypair.pem
 
 volumes:
   - vol_name: first-vol
