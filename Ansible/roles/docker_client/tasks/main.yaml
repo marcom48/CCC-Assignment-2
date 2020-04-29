@@ -11,13 +11,6 @@
       COUCHDB_USER: "{{ vault_couchdb_user }}"
       COUCHDB_PASSWORD: "{{ vault_couchdb_password }}"
       NODE_ID: "{{ ansible_hostname }}"
-      VIRTUAL_HOST: a.unimelb-comp90024-2020-grp-11.cloud.edu.au
+      VIRTUAL_HOST: "a.unimelb-comp90024-2020-grp-11.cloud.edu.au"
       VIRTUAL_PORT: "8000"
-      LETSENCRYPT_HOST: a.unimelb-comp90024-2020-grp-11.cloud.edu.au
-      LETSENCRYPT_EMAIL: amcclernon@student.unimelb.edu.au
-      http_proxy: http://wwwproxy.unimelb.edu.au:8000
-      https_proxy: http://wwwproxy.unimelb.edu.au:8000
-      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
-      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
-      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
   become: yes
