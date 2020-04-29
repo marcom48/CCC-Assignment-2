@@ -3,7 +3,6 @@ export const jsonGeoJson = json => {
     let res = {}
     let features = []
     let cur = {}
-    console.log(json)
     res["type"] = "FeatureCollection"
     json["default"]["rows"].forEach(element => {
         cur["type"] = "Feature"
