@@ -84,6 +84,20 @@ class DBHelper:
             self.db_users[user_id] = doc
         except:
             pass
+    
+    def store_located(self, data) -> None:
+
+        located_data = {}
+        for i in ['harvestTime', '_id', 'location','created_at','text','sentiment','user']:
+            located_data[i] = data[i]
+
+
+        self.db_located[located_data['_id']] = located_data
+
+
+
+
+
 
 
     def add_tweet(self, tweet) -> bool:
@@ -95,8 +109,12 @@ class DBHelper:
             if data:
                 self.db_tweets[tweet["id_str"]] = data
 
-                if has_location:
-                    self.db_located[tweet["id_str"]] = data
+                if has_location and not self.db_located.get(tweet["id_str"]):
+                    # # print(tweet["id_str"])
+                    # data['_id'] = data['_id'] + "_loc"
+
+                    self.store_located(data)
+
 
                 # Record user
                 user_id = tweet["user"]["id_str"]
