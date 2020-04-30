@@ -29,13 +29,13 @@ def updateSuburbs():
     server = couchdb.Server("http://%s:%s@127.0.0.1:5984/" % (config.COUCHDB_USER, config.COUCHDB_PASSWORD))
 
     try:
-        db = server['website_user']
+        db = server['website_suburb']
     except:
         try:
-            server.create('website_user')
+            server.create('website_suburb')
         except:
             pass
-        db = server['website_user']
+        db = server['website_suburb']
 
 
     bins = [i for i in range(1, 11)]
