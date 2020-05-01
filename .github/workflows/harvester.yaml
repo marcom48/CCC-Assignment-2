@@ -1,0 +1,23 @@
+
+name: Package Harvester Docker
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'harvester/*'
+jobs:
+  build:
+    name: build latest docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Publish to Harvester to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: kvoli/ccc-stream
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: harvester/

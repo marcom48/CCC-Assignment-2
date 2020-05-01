@@ -1,0 +1,23 @@
+
+name: Package Processor Docker
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'processor/*'
+jobs:
+  build:
+    name: build latest docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Publish to Processor to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: kvoli/ccc-websiteprocessor
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: processor/
