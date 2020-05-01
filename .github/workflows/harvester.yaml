@@ -3,10 +3,11 @@ name: Package Harvester Docker
 
 on:
   push:
-    branches:
-      - master
     paths:
       - 'harvester/*'
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     name: build latest docker image

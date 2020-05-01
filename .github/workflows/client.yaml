@@ -3,10 +3,12 @@ name: Package Client Docker
 
 on:
   push:
-    branches:
-      - master
     paths:
       - 'src/client/*'
+  pull_request:
+    branches:
+      - master
+
 jobs:
   build:
     name: build latest docker image

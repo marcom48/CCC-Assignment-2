@@ -3,10 +3,11 @@ name: Package Processor Docker
 
 on:
   push:
-    branches:
-      - master
     paths:
       - 'processor/*'
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     name: build latest docker image
