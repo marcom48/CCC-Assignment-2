@@ -11,5 +11,5 @@
 
   roles:
     - config_watchtower
-    - docker_harvest
+    - docker_websitedata
     - slack_notification
