@@ -1,4 +1,3 @@
-
 name: Package docker
 
 on: [push]
@@ -7,21 +6,27 @@ jobs:
   build:
     name: build latest docker image
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Publish to Client to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
-        with: 
+        with:
           name: kvoli/ccc-client
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           workdir: src/client/
       - name: Publish to Harvester to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
-        with: 
+        with:
           name: kvoli/ccc-stream
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           workdir: harvester/
-      
+      - name: Publish to Processor to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: kvoli/ccc-websiteprocessor
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          workdir: processor/

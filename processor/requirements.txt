@@ -1,0 +1,3 @@
+couchdb
+numpy
+tqdm
