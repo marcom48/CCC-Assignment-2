@@ -24,26 +24,24 @@ def getSents(sents):
     return ret
 
 
-def updateSuburbs():
+def updateDB(database, command):
 
     server = couchdb.Server("http://%s:%s@127.0.0.1:5984/" % (config.COUCHDB_USER, config.COUCHDB_PASSWORD))
 
     try:
-        db = server['website_suburb']
+        db = server[database]
     except:
         try:
-            server.create('website_suburb')
+            server.create(database)
         except:
             pass
-        db = server['website_suburb']
+        db = server[database]
 
 
     bins = [i for i in range(1, 11)]
     count = 0
 
-
-
-    os.system(config.SUBURB_GET)
+    os.system(command)
 
     with open("data.json", 'r') as file:
         data = json.load(file)
@@ -51,8 +49,11 @@ def updateSuburbs():
     data = data['rows']
     full_data = defaultdict(dict)
     import sys
+    #print(len(data))
     for i in tqdm(data):
         try:
+            #print(i['key'][0])
+            #sys.exit()
             suburb = i['key'][0]
             if not full_data.get(suburb):
                 full_data[suburb] = {'_id': suburb}
@@ -62,22 +63,20 @@ def updateSuburbs():
             sents = getSents(i['value'])
 
             sents = list(map(lambda a: a*5 + 5, sents))
-            month_ave = np.mean(sents)
+            
 
             inds = np.digitize(sents, bins)
+            month_ave = np.mean(inds)
             inds = list(map(str, inds))
             c = Counter(inds)
 
-            month_data = {"count": len(sents), 'sentiments_bins': dict(c)}
+            month_data = {"average": month_ave, "count": len(sents), 'sentiments_bins': dict(c)}
 
             full_data[suburb][dict_key] = month_data
 
         except Exception as e:
             traceback.print_exc()
             print(e)
-            print(sents)
-            print(i['value'])
-            sys.exit()
             count += 1
             pass
 
@@ -103,7 +102,14 @@ def updateSuburbs():
 def main():
 
     while True:
-        updateSuburbs()
+        try:
+            updateDB('website_suburb', config.SUBURB_GET)
+        except:
+            pass
+        try:
+            updateDB('users', config.USER_GET)
+        except:
+            pass
         time.sleep(3600 * 6)
         
 
