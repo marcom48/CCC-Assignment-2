@@ -60,9 +60,11 @@ def updateDB(database, command):
 
     # Results dictionary
     full_data = defaultdict(dict)
-
+    melbourne = False
+    
     # Save full city data too
     if database == 'users':
+        melbourne = True
         melbourne_data = defaultdict(dict)
 
     for i in tqdm(data):
@@ -80,7 +82,7 @@ def updateDB(database, command):
 
             addSent(full_data[_id], dict_key, sentiment)
 
-            if database == 'users':
+            if melbourne:
                 addSent(melbourne_data, dict_key, sentiment)
 
         except Exception as e:
@@ -101,7 +103,7 @@ def updateDB(database, command):
 
     saveDB(database, full_data)
     
-    if database == 'users':
+    if melbourne:
         for i,j in melbourne_data.items():
             try:
                 melbourne_data[i]['_id'] = i

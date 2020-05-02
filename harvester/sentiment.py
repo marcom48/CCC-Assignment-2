@@ -9,8 +9,6 @@ class SentimentAnalyser:
     def analyse(self, tweet):
 
         try:
-            sentiment = self.analyser.polarity_scores(tweet)['compound']
-            sentiment = int(math.ceil((sentiment*5) + 5))
-            return 
+            return self.analyser.polarity_scores(tweet)['compound']
         except:
             return None

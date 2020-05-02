@@ -57,7 +57,6 @@ class TweetProcessor():
 
 
             # Add in extra data relevant for our topic
-            
             return tweet_doc, has_location
 
         except Exception as e:
