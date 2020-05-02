@@ -88,11 +88,26 @@ const MapBox = () => {
               'type': 'fill',
               'source': 'suburbs',
               "paint": {
-                'fill-color': "#00ffff",
+                'fill-color': [
+                  'interpolate',
+                  ['linear'],
+                  ['get', 'LATEST_SENTIMENT'],
+                  0, '#F2F112',
+                  1, '#EED322',
+                  2, '#E6B71E',
+                  3, '#DA9C20',
+                  4, '#CA8323',
+                  5, '#B86B25',
+                  6, '#A25626',
+                  7, '#8B4225',
+                  8, '#723122',
+                  9, '#512015',
+                  10, '#000000'
+                ],
                 "fill-opacity": ["case",
                   ["boolean", ["feature-state", "hover"], false],
-                  0.5,
-                  0.2
+                  0.8,
+                  0.5
                 ]
               }
             });

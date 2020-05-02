@@ -60,10 +60,22 @@ export async function asyncRequestDB(request) {
             return null
         })
     return res;
-  }
+}
+
+
+const getLSentiment = (sentimentData) => {
+    let latestMonth = Object.keys(sentimentData).sort().reverse()[0]
+    return sentimentData[latestMonth]["average"]
+    
+}
+
+
+
+
 
 export const combineSuburbData = (r, suburbs) => {
     const res  = {}
+    const latestSentiment = {}
     r.forEach(e => {
       var id = e["id"]
       var sentiment = {}
@@ -73,12 +85,14 @@ export const combineSuburbData = (r, suburbs) => {
         } 
       })
 
+      latestSentiment[id] = getLSentiment(sentiment)
       res[id] = sentiment
     })
 
     for (var i=0; i < suburbs.features.length; i++) {
         var suburb_name = suburbs["features"][i]["properties"]["SA2_NAME16"]
         suburbs["features"][i]["properties"]["sentiment"] = res[suburb_name]
+        suburbs["features"][i]["properties"]["LATEST_SENTIMENT"] = latestSentiment[suburb_name]
     }
     return suburbs
   }

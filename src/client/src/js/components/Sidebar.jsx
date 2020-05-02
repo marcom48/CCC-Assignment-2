@@ -71,6 +71,9 @@ export default function Sidebar(opened, selected) {
             <ListItemText primary="Region" secondary={state.selected.properties.SA4_NAME16}/>
           </ListItem>
           <ListItem >
+            <ListItemText primary="Latest Sentiment Avg." secondary={state.selected.properties.LATEST_SENTIMENT}/>
+          </ListItem>
+          <ListItem >
             <ListItemText primary="Sentiment" secondary={state.selected.properties.sentiment.toString()}/>
           </ListItem>
         </div> 
