@@ -27,7 +27,7 @@ def search_user(api, db, user_id):
             check_status(api)
 
             tweets_old = tweepy.Cursor(api.user_timeline, id=user_id, \
-                since_id=config.TWEET_DEC2018, max_id=config.TWEET_APR2019).items(config.FIRST_SEARCH_LIMIT)
+                since_id=config.TWEET_DEC2018, max_id=config.TWEET_MAY2019).items(config.FIRST_SEARCH_LIMIT)
 
             for i in tweets_old:
                 results.append(i._json)

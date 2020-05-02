@@ -1,4 +1,5 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import math
 
 class SentimentAnalyser:
     def __init__(self):
@@ -8,6 +9,8 @@ class SentimentAnalyser:
     def analyse(self, tweet):
 
         try:
-            return self.analyser.polarity_scores(tweet)['compound']
+            sentiment = self.analyser.polarity_scores(tweet)['compound']
+            sentiment = int(math.ceil((sentiment*5) + 5))
+            return 
         except:
             return None
