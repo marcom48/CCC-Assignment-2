@@ -7,3 +7,4 @@ harvester/lib64
 harvester/pyvenv.cfg
 harvester/.vscode/
 Ansible/openrc.sh
+.env

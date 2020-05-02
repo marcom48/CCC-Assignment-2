@@ -1,7 +1,3 @@
-
-import * as melb_geo from '../constants/melbourne.geojson'
-import * as melb_points from '../constants/sampleTwitter.json'
-import { jsonGeoJson } from '../helpers';
 import  {
     SELECT_POINT,
     SELECT_AREA,
@@ -24,7 +20,6 @@ const initialState = {
 }
 
 const MapReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case SELECT_POINT:
             return {

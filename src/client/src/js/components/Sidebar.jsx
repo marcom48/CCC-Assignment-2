@@ -1,8 +1,6 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { openStatsDrawer } from '../actions';
 import { List, ListItem, ListItemText } from '@material-ui/core';
@@ -20,7 +18,6 @@ export default function Sidebar(opened, selected) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector(store => store.MapReducer);
-  const open = state.drawerOpen;
 
   const toggleDrawer = (env) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -38,7 +35,7 @@ export default function Sidebar(opened, selected) {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {state.selected ? state.selected.geometry.type == "Point" ? 
+        {state.selected ? state.selected.geometry.type === "Point" ? 
           <div>
             <ListItem>
               <ListItemText primary="Tweet Data"/>
@@ -58,6 +55,9 @@ export default function Sidebar(opened, selected) {
             <ListItem>
               <ListItemText primary="Time Created" secondary={state.selected.properties.createdTime}/>
             </ListItem>
+            <ListItem>
+              <ListItemText primary="Sentiment" secondary={state.selected.properties.sentiment}/>
+            </ListItem>
         </div>
         :
         <div>
@@ -69,6 +69,9 @@ export default function Sidebar(opened, selected) {
           </ListItem>
           <ListItem >
             <ListItemText primary="Region" secondary={state.selected.properties.SA4_NAME16}/>
+          </ListItem>
+          <ListItem >
+            <ListItemText primary="Sentiment" secondary={state.selected.properties.sentiment.toString()}/>
           </ListItem>
         </div> 
 
