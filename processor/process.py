@@ -72,12 +72,11 @@ def updateDB(database, command):
             if not full_data.get(_id):
                 full_data[_id] = {'_id': _id}
 
-                # Date details
+            # Date details
             year = i['key'][1]
             month = i['key'][2] + 1
-            day = i['key'][3]
-            sentiment = str(i['key'][4])
-            dict_key = str(year) + '-' + str(datetime.date(year, month, day).isocalendar()[1])
+            sentiment = str(i['key'][-1])
+            dict_key = str(year) + '-' + str(month)
 
             addSent(full_data[_id], dict_key, sentiment)
 
