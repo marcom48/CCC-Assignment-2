@@ -117,9 +117,6 @@ def updateDB(database, command):
 
 
 
-    
-
-
 def main():
 
     while True:
