@@ -8,5 +8,6 @@ uuid = {{ couchdb_uuid }}
 [couch_httpd_auth]
 secret = {{ vault_couchdb_http_secret }}
 
-[query_server_config]
-reduce_limit = true
+[cluster]
+q=6
+n=3

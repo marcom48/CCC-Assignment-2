@@ -1,7 +1,7 @@
 - name: Start processor
   docker_container:
     name: "{{ ansible_hostname }}_websiteprocessor"
-    image: kvoli/ccc-websiteprocessor
+    image: kvoli/ccc-websiteprocessor:latest
     network_mode: host
     state: started
     restart: yes
