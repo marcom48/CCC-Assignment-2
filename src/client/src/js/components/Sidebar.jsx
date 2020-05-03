@@ -4,6 +4,7 @@ import Drawer from '@material-ui/core/Drawer';
 import { useSelector, useDispatch } from 'react-redux';
 import { openStatsDrawer } from '../actions';
 import { List, ListItem, ListItemText } from '@material-ui/core';
+import Suburb from './Suburb';
 
 const useStyles = makeStyles({
   list: {
@@ -76,6 +77,7 @@ export default function Sidebar(opened, selected) {
           <ListItem >
             <ListItemText primary="Sentiment" secondary={state.selected.properties.sentiment.toString()}/>
           </ListItem>
+          {/* <Suburb selected={state.selected}/> */}
         </div> 
 
         : ""}

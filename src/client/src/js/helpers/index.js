@@ -38,7 +38,6 @@ export const jsonGeoJson = json => {
 
 
 export function requestDB(request) {
-    console.log(DATABASE_PASSWORD, DATABASE_USERNAME )
     return axios.get(DATABASE_URL + request, {
       auth : {
         username: DATABASE_USERNAME,
@@ -84,10 +83,10 @@ export const combineSuburbData = (r, suburbs) => {
           sentiment[k] = e["doc"][k]
         } 
       })
-
       latestSentiment[id] = getLSentiment(sentiment)
       res[id] = sentiment
     })
+
 
     for (var i=0; i < suburbs.features.length; i++) {
         var suburb_name = suburbs["features"][i]["properties"]["SA2_NAME16"]
