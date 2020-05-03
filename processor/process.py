@@ -76,7 +76,7 @@ def updateDB(database, command):
 
             # Date details
             year = i['key'][1]
-            month = i['key'][2] + 1
+            month = i['key'][2]
             sentiment = str(i['key'][-1])
             dict_key = str(year) + '-' + str(month)
 
