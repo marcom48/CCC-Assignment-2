@@ -1,0 +1,9 @@
+{
+    "_id": "_design/user_stats",
+    "views": {
+        "user_count": {
+            "map": "function (doc) {var dt = new Date(doc.created_at); emit([doc.user.id, dt.getFullYear(), dt.getMonth()], doc.sentiment)}",
+            "reduce": "function(keys, values) {return values;}"
+        }
+    }
+}

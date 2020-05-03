@@ -1,0 +1,4 @@
+couchdb
+numpy
+tqdm
+requests

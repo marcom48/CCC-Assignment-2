@@ -1,19 +1,23 @@
 import React, { useEffect, useRef, useState} from 'react'
 import mapboxgl from 'mapbox-gl'
-import {MAPBOX_KEY, MAPBOX_PUB_KEY} from '../constants/config'
+import { MAPBOX_PUB_KEY } from '../constants/config'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Sidebar from './Sidebar'
+import Axios from 'axios';
 
 import * as melb_geo from '../constants/melbourne.geojson'
-import * as melb_points from '../constants/sampleTwitter.json'
-import { selectArea, selectPoint, openStatsDrawer } from '../actions'
+import * as melb_points from '../constants/melbourneTweets.geojson'
+import { selectArea, selectPoint } from '../actions'
 import { useSelector, useDispatch } from 'react-redux';
-import { jsonGeoJson } from '../helpers'
+import { requestDB, combineSuburbData } from '../helpers'
+
 const styles = {
   width: "100vw",
   height: "calc(100vh - 115px)",
   position: "absolute"
 };
+
+
 
 const MapBox = () => {
     const dispatch = useDispatch();
@@ -24,11 +28,26 @@ const MapBox = () => {
     const [zoom, setZoom] = useState(8);
     const [map, setMap] = useState(null);
 
-    const points = jsonGeoJson(melb_points);
-    const suburbs = melb_geo;
+    const loadData = async (map) => {
+      const reqs = [];
+      reqs.push(Axios.get(melb_geo)); // local census suburb data
+      reqs.push(requestDB('website_suburb/_all_docs?include_docs=true')); // sentiment suburb data
+      reqs.push(Axios.get(melb_points)); // located tweets
 
+      const res = await Axios.all(reqs);
+
+      let suburbData = combineSuburbData(res[1].data.rows, res[0].data);
+      let pointData = res[2].data;
+
+      map.getSource('suburbs').setData(suburbData)
+      map.getSource('points').setData(pointData)
+      // console.log(suburbData)
+
+    }
 
     useEffect(() => {
+
+      // console.log(requestDBStuff("located_tweets/_design/suburb_stats/_view/get_suburb_sentiment?group=true"))
         mapboxgl.accessToken = MAPBOX_PUB_KEY;
         const initializeMap = ({ setMap, mapContainer }) => {
           const map = new mapboxgl.Map({
@@ -37,20 +56,23 @@ const MapBox = () => {
             center: [lng, lat],
             zoom: zoom
           });
-
     
           map.on("load", () => {
+
             setMap(map);
             map.resize();
             map.addSource('suburbs', {
               'type': 'geojson',
-              'data': suburbs
+              'data': null
             })
 
             map.addSource('points', {
               'type': 'geojson',
-              'data': points
+              'data': null
             })
+
+            loadData(map)
+
 
             map.addLayer({
               'id': 'suburb-border',
@@ -68,11 +90,26 @@ const MapBox = () => {
               'type': 'fill',
               'source': 'suburbs',
               "paint": {
-                'fill-color': "#00ffff",
+                'fill-color': [
+                  'interpolate',
+                  ['linear'],
+                  ['get', 'LATEST_SENTIMENT'],
+                  0, '#F2F112',
+                  1, '#EED322',
+                  2, '#E6B71E',
+                  3, '#DA9C20',
+                  4, '#CA8323',
+                  5, '#B86B25',
+                  6, '#A25626',
+                  7, '#8B4225',
+                  8, '#723122',
+                  9, '#512015',
+                  10, '#000000'
+                ],
                 "fill-opacity": ["case",
                   ["boolean", ["feature-state", "hover"], false],
-                  0.5,
-                  0.2
+                  0.8,
+                  0.5
                 ]
               }
             });
@@ -187,7 +224,7 @@ const MapBox = () => {
 
     return (
       <>
-        <div ref={el => (mapContainer.current = el)} style={styles} />
+       <div ref={el => (mapContainer.current = el)} style={styles} />
         <Sidebar />
       </>
     )

@@ -34,11 +34,22 @@
   shell: >
     curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/users
 
-
 - name: Create Location database
   shell: >
-  curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/users
+  curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/located_tweets
   
 - name: Create Website database
   shell: >
-    curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/users
+    curl -X PUT http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/website_suburb
+
+- name: Upload design documents (1/2)
+  uri:
+    url: http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/located_tweets/suburb_stats
+    method: POST
+    src: suburb.json
+
+- name: Upload design documents (2/2)
+  uri:
+    url: http://{{ vault_couchdb_user }}:{{ vault_couchdb_user }}@localhost:5984/tweets/user_stats
+    method: POST
+    src: user.json

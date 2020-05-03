@@ -1,0 +1,16 @@
+- name: Start processor
+  docker_container:
+    name: "{{ ansible_hostname }}_websiteprocessor"
+    image: kvoli/ccc-websiteprocessor:latest
+    network_mode: host
+    state: started
+    restart: yes
+    env:
+      COUCHDB_USER: "{{ vault_couchdb_user }}"
+      COUCHDB_PASSWORD: "{{ vault_couchdb_password }}"
+      http_proxy: http://wwwproxy.unimelb.edu.au:8000
+      https_proxy: http://wwwproxy.unimelb.edu.au:8000
+      HTTP_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      HTTPS_PROXY: http://wwwproxy.unimelb.edu.au:8000
+      ftp_proxy: http://wwwproxy.unimelb.edu.au:8000
+  become: yes
