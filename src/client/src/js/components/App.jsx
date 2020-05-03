@@ -40,13 +40,13 @@ const App = () => {
 
   return (
     <div className={classes.root}>
-      <MuiThemeProvider theme={THEME}>
+      {/* <MuiThemeProvider theme={THEME}> */}
         <CssBaseline />
         <NavBar />
         <Main className={classes.main} />
         <div className={classes.phantom} />
         <Footer className={classes.footer} />
-      </MuiThemeProvider>
+      {/* </MuiThemeProvider> */}
     </div>
   );
 };

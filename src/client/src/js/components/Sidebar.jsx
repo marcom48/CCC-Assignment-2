@@ -21,6 +21,7 @@ export default function Sidebar(opened, selected) {
   const state = useSelector(store => store.MapReducer);
 
   const toggleDrawer = (env) => (event) => {
+    console.log(event)
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -30,58 +31,19 @@ export default function Sidebar(opened, selected) {
 
   const list = () => (
     <div
-      className={classes.list}
+      className={classes.fullList}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {state.selected ? state.selected.geometry.type === "Point" ? 
+      {state.selected ? state.selected.geometry.type === "Point" ? 
           <div>
-            <ListItem>
-              <ListItemText primary="Tweet Data"/>
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Hashtags" secondary={state.selected.properties.hashtags} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Suburb" secondary={state.selected.properties.suburb} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="User" secondary={state.selected.properties.user} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Text" secondary={state.selected.properties.text} />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Time Created" secondary={state.selected.properties.createdTime}/>
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Sentiment" secondary={state.selected.properties.sentiment}/>
-            </ListItem>
-        </div>
+          </div>
         :
-        <div>
-          <ListItem >
-            <ListItemText primary="Suburb" secondary={state.selected.properties.SA2_NAME16}/>
-          </ListItem>
-          <ListItem >
-            <ListItemText primary="Area" secondary={state.selected.properties.SA3_NAME16}/>
-          </ListItem>
-          <ListItem >
-            <ListItemText primary="Region" secondary={state.selected.properties.SA4_NAME16}/>
-          </ListItem>
-          <ListItem >
-            <ListItemText primary="Latest Sentiment Avg." secondary={state.selected.properties.LATEST_SENTIMENT}/>
-          </ListItem>
-          <ListItem >
-            <ListItemText primary="Sentiment" secondary={state.selected.properties.sentiment.toString()}/>
-          </ListItem>
-          {/* <Suburb selected={state.selected}/> */}
-        </div> 
-
+          <div>
+            <Suburb selected={state.selected}/>
+          </div> 
         : ""}
-      </List>
     </div>
   );
 

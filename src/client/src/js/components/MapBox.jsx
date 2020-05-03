@@ -41,6 +41,7 @@ const MapBox = () => {
 
       map.getSource('suburbs').setData(suburbData)
       map.getSource('points').setData(pointData)
+      // console.log(suburbData)
 
     }
 
@@ -71,6 +72,7 @@ const MapBox = () => {
             })
 
             loadData(map)
+
 
             map.addLayer({
               'id': 'suburb-border',

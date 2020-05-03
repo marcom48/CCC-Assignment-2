@@ -70,8 +70,6 @@ const getLSentiment = (sentimentData) => {
 
 
 
-
-
 export const combineSuburbData = (r, suburbs) => {
     const res  = {}
     const latestSentiment = {}
