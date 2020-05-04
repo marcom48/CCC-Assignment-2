@@ -41,13 +41,13 @@ def saveDB(database, data):
 
     return save_count
 
-def addSent(data, dict_key, sentiment):
+def addSent(data, dict_key, sentiment, value):
 
     if not data.get(dict_key):
         data[dict_key] = {}
         data[dict_key]['sentiments'] = defaultdict(int)
     
-    data[dict_key]['sentiments'][sentiment] += 1
+    data[dict_key]['sentiments'][sentiment] += value
 
 
 def updateDB(database, command):
@@ -76,14 +76,14 @@ def updateDB(database, command):
 
             # Date details
             year = i['key'][1]
-            month = i['key'][2] + 1
+            month = i['key'][2]
             sentiment = str(i['key'][-1])
             dict_key = str(year) + '-' + str(month)
 
-            addSent(full_data[_id], dict_key, sentiment)
+            addSent(full_data[_id], dict_key, sentiment, i['value'])
 
             if melbourne:
-                addSent(melbourne_data, dict_key, sentiment)
+                addSent(melbourne_data, dict_key, sentiment, i['value'])
 
         except Exception as e:
             traceback.print_exc()
