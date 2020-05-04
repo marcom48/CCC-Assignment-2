@@ -33,16 +33,16 @@ export default function Sidebar(opened, selected) {
     <div
       className={classes.fullList}
       role="presentation"
-      onClick={toggleDrawer(false)}
+      // onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      {state.selected ? state.selected.geometry.type === "Point" ? 
-          <div>
-          </div>
+      {state.selected ? state.selected.geometry.type === "Point" ?
+        <div>
+        </div>
         :
-          <div>
-            <Suburb selected={state.selected}/>
-          </div> 
+        <div>
+          <Suburb selected={state.selected} />
+        </div>
         : ""}
     </div>
   );
@@ -50,11 +50,11 @@ export default function Sidebar(opened, selected) {
 
   return (
     <div>
-        <React.Fragment>
-          <Drawer anchor={'right'} open={state.drawerOpen}  onClose={toggleDrawer(false)}>
-            {list()}
-          </Drawer>
-        </React.Fragment>
+      <React.Fragment>
+        <Drawer anchor={'right'} open={state.drawerOpen} onClose={toggleDrawer(false)}>
+          {list()}
+        </Drawer>
+      </React.Fragment>
       ))}
     </div>
   );

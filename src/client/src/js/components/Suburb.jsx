@@ -1,27 +1,27 @@
-import React, { useEffect, useRef, useState} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Grid, Typography, Card } from '@material-ui/core';
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      width: '100%',
+        width: '100%',
     },
     heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: theme.typography.fontWeightRegular,
     },
     heading1: {
         fontSize: theme.typography.pxToRem(25),
         fontWeight: theme.typography.fontWeightBold,
-      },
+    },
     pad: {
         padding: theme.spacing(3),
     },
-  }));
+}));
 
 
-const Suburb = ({selected}) => {
+const Suburb = ({ selected }) => {
     const classes = useStyles();
     const getAvg = (keys, sentiment) => {
         return keys.map(k => sentiment[k]["average"])
@@ -42,7 +42,7 @@ const Suburb = ({selected}) => {
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(255, 99, 132, 0.4)',
                 hoverBorderColor: 'rgba(255, 99, 132, 1)',
-                data: getAvg(Object.keys(v),  v),
+                data: getAvg(Object.keys(v), v),
             }]
         }
         return bd
@@ -63,8 +63,8 @@ const Suburb = ({selected}) => {
                     '#FF5A40',
                     '#EF00FF',
                     '#050255',
-                  ],
-                  hoverBackgroundColor: [
+                ],
+                hoverBackgroundColor: [
                     '#FF6384',
                     '#36A2EB',
                     '#FFCE56',
@@ -73,13 +73,13 @@ const Suburb = ({selected}) => {
                     '#FF5A40',
                     '#EF00FF',
                     '#050255',
-                  ],
+                ],
             }]
         }
         return cd
     }
 
-    
+
     return (
         <Grid
             container
@@ -88,29 +88,29 @@ const Suburb = ({selected}) => {
             alignItems="center"
             spacing={6}
             className={classes.pad}
-            >
+        >
             <Grid item>
-            <Typography align='center' className={classes.heading1}>{selected["properties"]["SA2_NAME16"]}</Typography>
+                <Typography align='center' className={classes.heading1}>{selected["properties"]["SA2_NAME16"]}</Typography>
             </Grid>
             <Grid item>
                 <Typography align='center' className={classes.heading}>Monthly Sentiment Average</Typography>
                 <Card>
-                <Bar
-                    data={() => setBarData(selected)}
-                    width={400}
-                    height={350}
-                />
+                    <Bar
+                        data={() => setBarData(selected)}
+                        width={400}
+                        height={350}
+                    />
                 </Card>
             </Grid>
             <Grid item>
-                
-            <Typography align='center' className={classes.heading}>Monthly Tweet Frequency</Typography>
+
+                <Typography align='center' className={classes.heading}>Monthly Tweet Frequency</Typography>
                 <Card>
-                <Doughnut 
-                    data={() => setCircleData(selected)}
-                    width={400}
-                    height={350}
-                />
+                    <Doughnut
+                        data={() => setCircleData(selected)}
+                        width={400}
+                        height={350}
+                    />
                 </Card>
             </Grid>
 
