@@ -1,95 +1,95 @@
-import {DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_URL} from '../constants/config'
+import { DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_URL } from '../constants/config'
 import axios from 'axios'
 
 export const jsonGeoJson = json => {
 
-    let res = {}
-    let features = []
-    let cur = {}
-    res["type"] = "FeatureCollection"
-    json["default"]["rows"].forEach(element => {
-        if (element["doc"]["location"] != null) {
-            cur["type"] = "Feature"
-            cur["properties"] = {
-                "harvestTime": element["doc"]["harvestTime"],
-                "_id": element["_id"],
-                "harvestNode": element["doc"]["harvestNode"],
-                "createdTime": element["doc"]["created_at"],
-                "user": element["doc"]["user"],
-                "hashtags": element["doc"]["hashtags"],
-                "suburb": element["doc"]["location"]["suburb"],
-                "text": element["doc"]["text"],
-                "sentiment": element["doc"]["sentiment"],
-            }
-            cur["geometry"] = {
-                "type": "Point",
-                "coordinates": [element["doc"]["location"]["longitude"], element["doc"]["location"]["latitude"]]
-            }
-            features.push(cur)
-            cur = {}
-        }
-    });
+  let res = {}
+  let features = []
+  let cur = {}
+  res["type"] = "FeatureCollection"
+  json["default"]["rows"].forEach(element => {
+    if (element["doc"]["location"] != null) {
+      cur["type"] = "Feature"
+      cur["properties"] = {
+        "harvestTime": element["doc"]["harvestTime"],
+        "_id": element["_id"],
+        "harvestNode": element["doc"]["harvestNode"],
+        "createdTime": element["doc"]["created_at"],
+        "user": element["doc"]["user"],
+        "hashtags": element["doc"]["hashtags"],
+        "suburb": element["doc"]["location"]["suburb"],
+        "text": element["doc"]["text"],
+        "sentiment": element["doc"]["sentiment"],
+      }
+      cur["geometry"] = {
+        "type": "Point",
+        "coordinates": [element["doc"]["location"]["longitude"], element["doc"]["location"]["latitude"]]
+      }
+      features.push(cur)
+      cur = {}
+    }
+  });
 
-    res["features"] = features
-    
-    return res
+  res["features"] = features
+
+  return res
 
 }
 
 
 export function requestDB(request) {
-    return axios.get(DATABASE_URL + request, {
-      auth : {
-        username: DATABASE_USERNAME,
-        password: DATABASE_PASSWORD,
-      },
-      crossdomain: true,
-    })
-  }
+  return axios.get(DATABASE_URL + request, {
+    auth: {
+      username: DATABASE_USERNAME,
+      password: DATABASE_PASSWORD,
+    },
+    crossdomain: true,
+  })
+}
 
 export async function asyncRequestDB(request) {
-    let res = await axios.get(DATABASE_URL + request, {
-      auth : {
-        username: DATABASE_USERNAME,
-        password: DATABASE_PASSWORD,
-      },
-      crossdomain: true,
-    }).catch(err => {
-        console.log(err)
-            return null
-        })
-    return res;
+  let res = await axios.get(DATABASE_URL + request, {
+    auth: {
+      username: DATABASE_USERNAME,
+      password: DATABASE_PASSWORD,
+    },
+    crossdomain: true,
+  }).catch(err => {
+    console.log(err)
+    return null
+  })
+  return res;
 }
 
 
 const getLSentiment = (sentimentData) => {
-    let latestMonth = Object.keys(sentimentData).sort().reverse()[0]
-    return sentimentData[latestMonth]["average"]
-    
+  let latestMonth = Object.keys(sentimentData).sort().reverse()[0]
+  return sentimentData[latestMonth]["average"]
+
 }
 
 
 
 export const combineSuburbData = (r, suburbs) => {
-    const res  = {}
-    const latestSentiment = {}
-    r.forEach(e => {
-      var id = e["id"]
-      var sentiment = {}
-      Object.keys(e["doc"]).forEach(k => {
-        if (k[0] !== '_') {
-          sentiment[k] = e["doc"][k]
-        } 
-      })
-      latestSentiment[id] = getLSentiment(sentiment)
-      res[id] = sentiment
+  const res = {}
+  const latestSentiment = {}
+  r.forEach(e => {
+    var id = e["id"]
+    var sentiment = {}
+    Object.keys(e["doc"]).forEach(k => {
+      if (k[0] !== '_') {
+        sentiment[k] = e["doc"][k]
+      }
     })
+    latestSentiment[id] = getLSentiment(sentiment)
+    res[id] = sentiment
+  })
 
 
-    for (var i=0; i < suburbs.features.length; i++) {
-        var suburb_name = suburbs["features"][i]["properties"]["SA2_NAME16"]
-        suburbs["features"][i]["properties"]["sentiment"] = res[suburb_name]
-        suburbs["features"][i]["properties"]["LATEST_SENTIMENT"] = latestSentiment[suburb_name]
-    }
-    return suburbs
+  for (var i = 0; i < suburbs.features.length; i++) {
+    var suburb_name = suburbs["features"][i]["properties"]["SA2_NAME16"]
+    suburbs["features"][i]["properties"]["sentiment"] = res[suburb_name]
+    suburbs["features"][i]["properties"]["LATEST_SENTIMENT"] = latestSentiment[suburb_name]
   }
+  return suburbs
+}

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openStatsDrawer } from '../actions';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import Suburb from './Suburb';
+import TweetDetails from './TweetDetails'
 
 const useStyles = makeStyles({
   list: {
@@ -33,11 +34,11 @@ export default function Sidebar(opened, selected) {
     <div
       className={classes.fullList}
       role="presentation"
-      // onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
       {state.selected ? state.selected.geometry.type === "Point" ?
         <div>
+          <TweetDetails selected={state.selected} />
         </div>
         :
         <div>

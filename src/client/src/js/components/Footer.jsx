@@ -7,7 +7,7 @@ function Footer() {
   return (
     <footer>
       <Typography variant='subtitle1' align='center' color='textSecondary' component='p'>
-        kvoli - bjschuurman - cam-wong - marcom48 - SamMei323
+        kvoli - cam-wong - marcom48 - SamMei323
       </Typography>
       <Copyright />
     </footer>

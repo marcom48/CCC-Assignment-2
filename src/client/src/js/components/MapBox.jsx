@@ -6,7 +6,7 @@ import Sidebar from './Sidebar'
 import Axios from 'axios';
 
 import * as melb_geo from '../constants/melbourne.geojson'
-import * as melb_points from '../constants/melbourneTweets.geojson'
+import * as melb_points from '../constants/melbourneTweets2.geojson'
 import { selectArea, selectPoint } from '../actions'
 import { useSelector, useDispatch } from 'react-redux';
 import { requestDB, combineSuburbData } from '../helpers'

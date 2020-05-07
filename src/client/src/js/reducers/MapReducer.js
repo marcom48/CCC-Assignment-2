@@ -38,7 +38,6 @@ const MapReducer = (state = initialState, action) => {
                 melbData: state.melbData,
             }
         case SELECT_AREA:
-            console.log(action.selected)
             return {
                 selected: action.selected,
                 drawerOpen: true,
