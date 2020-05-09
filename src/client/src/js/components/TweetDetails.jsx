@@ -1,4 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import UserDetails from './UserDetails'
+import { requestDB } from '../helpers/index'
+import { getUserHistory } from '../actions'
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -11,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
     pad1: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(1),
     },
     heading: {
         fontSize: theme.typography.pxToRem(20),
@@ -37,12 +41,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const TweetDetails = ({ selected }) => {
+const TweetDetails = () => {
     const classes = useStyles();
-    console.log(selected.properties)
+    const dispatch = useDispatch()
+    const state = useSelector(store => store.MapReducer)
+    const { selected } = state
     const [loadingTweet, setLoadingTweet] = useState(true);
     const [loadingSentiment, setLoadingSentiment] = useState(true);
+    const [renderUser, setRenderUser] = useState(false);
     const twitter = <TwitterTweetEmbed tweetId={selected.properties.tweetId} options={{ width: 400 }} />
+
+    const loadUserData = async () => {
+        let res = await requestDB(`users/${JSON.parse(selected.properties.user).id}`)
+        const userData = res.data
+        return userData
+    }
+
+    useEffect(() => {
+        loadUserData().then(res => dispatch(getUserHistory(res)))
+    }, [])
 
     const loadTweet = () => {
         setTimeout(() =>
@@ -58,37 +75,44 @@ const TweetDetails = ({ selected }) => {
 
 
     return (
-        <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="center"
-            spacing={6}
-            className={classes.pad2}
-        >
-            <Grid item className={classes.pad1}>
-                <Typography align='center' className={classes.heading1}>Tweet Data</Typography>
-                {loadingTweet ? <div className={classes.spinner}><CircularProgress /></div> : <div>{twitter}</div>}
-                {loadTweet()}
-            </Grid>
-            <Grid item className={classes.pad1}>
-                <Typography align='center' className={classes.heading}>Sentiment Score</Typography>
+        <div>
+            {renderUser ? <UserDetails /> :
+                (<Grid
+                    container
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="center"
+                    spacing={6}
+                    className={classes.pad2}
+                >
+                    <Grid item className={classes.pad1}>
+                        <Typography align='center' className={classes.heading1}>Tweet Data</Typography>
+                        {loadingTweet ? <div className={classes.spinner}><CircularProgress /></div> : <div>{twitter}</div>}
+                        {loadTweet()}
+                    </Grid>
+                    <Grid item className={classes.pad1}>
+                        <Typography align='center' className={classes.heading}>Sentiment Score</Typography>
 
-                {loadingSentiment ? <div className={classes.spinner}><CircularProgress /></div> : <div><ReactStoreIndicator
-                    value={selected.properties.sentiment}
-                    maxValue={10}
-                    lineGap={3}
-                /></div>}
-                {loadSentiment()}
+                        {loadingSentiment ? <div className={classes.spinner}><CircularProgress /></div> : <div><ReactStoreIndicator
+                            value={selected.properties.sentiment}
+                            maxValue={10}
+                            lineGap={3}
+                        /></div>}
+                        {loadSentiment()}
 
-            </Grid>
-            <Grid item>
-                {/* #00acee twitter blue*/}
-                {loadingSentiment ? null :
-                    <Button variant="contained" color="primary">User Data</Button>}
-            </Grid>
+                    </Grid>
+                    <Grid item>
+                        {loadingSentiment ? null :
+                            <Button variant="contained" color="primary" onClick={() => {
+                                setRenderUser(true)
 
-        </Grid>
+                            }}>User Data</Button>}
+                    </Grid>
+
+                </Grid>)
+
+            }</div>
+
     )
 
 }

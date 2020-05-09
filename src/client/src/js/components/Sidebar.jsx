@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import { useSelector, useDispatch } from 'react-redux';
 import { openStatsDrawer } from '../actions';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+
 import Suburb from './Suburb';
 import TweetDetails from './TweetDetails'
 
@@ -14,15 +14,16 @@ const useStyles = makeStyles({
   fullList: {
     width: 'auto',
   },
+  drawerPaper: {
+    width: 470,
+  }
 });
 
 export default function Sidebar(opened, selected) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector(store => store.MapReducer);
-
   const toggleDrawer = (env) => (event) => {
-    console.log(event)
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -52,7 +53,9 @@ export default function Sidebar(opened, selected) {
   return (
     <div>
       <React.Fragment>
-        <Drawer anchor={'right'} open={state.drawerOpen} onClose={toggleDrawer(false)}>
+        <Drawer anchor={'right'} open={state.drawerOpen} onClose={toggleDrawer(false)} classes={{
+          paper: classes.drawerPaper
+        }}>
           {list()}
         </Drawer>
       </React.Fragment>

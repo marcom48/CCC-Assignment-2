@@ -15,7 +15,7 @@ export const jsonGeoJson = json => {
         "_id": element["_id"],
         "harvestNode": element["doc"]["harvestNode"],
         "createdTime": element["doc"]["created_at"],
-        "user": element["doc"]["user"],
+        "user": JSON.parse(element["doc"]["user"]),
         "hashtags": element["doc"]["hashtags"],
         "suburb": element["doc"]["location"]["suburb"],
         "text": element["doc"]["text"],

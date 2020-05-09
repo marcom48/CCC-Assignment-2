@@ -99,6 +99,7 @@ const Suburb = ({ selected }) => {
                         data={() => setBarData(selected)}
                         width={400}
                         height={350}
+                        options={{ scales: { yAxes: [{ stacked: true }] } }}
                     />
                 </Card>
             </Grid>

@@ -29,33 +29,20 @@ const MapReducer = (state = initialState, action) => {
     switch (action.type) {
         case SELECT_POINT:
             return {
+                ...state,
                 selected: action.selected,
                 drawerOpen: true,
-                points: state.points,
-                suburbs: state.points,
-                suburbData: state.suburbData,
-                userData: state.userData,
-                melbData: state.melbData,
             }
         case SELECT_AREA:
             return {
+                ...state,
                 selected: action.selected,
                 drawerOpen: true,
-                points: state.points,
-                suburbs: state.points,
-                suburbData: state.suburbData,
-                userData: state.userData,
-                melbData: state.melbData,
             }
         case STATS_DRAWER:
             return {
-                selected: state.selected,
+                ...state,
                 drawerOpen: false,
-                points: state.points,
-                suburbs: state.points,
-                suburbData: state.suburbData,
-                userData: state.userData,
-                melbData: state.melbData,
             }
         case GET_POINTS:
             return state;
@@ -64,7 +51,10 @@ const MapReducer = (state = initialState, action) => {
         case GET_SUBURB_DATA:
             return state;
         case GET_USER_HISTORY:
-            return state;
+            return {
+                ...state,
+                userData: action.selected
+            };
         default:
             return state;
     }
