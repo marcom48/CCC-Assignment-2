@@ -1,0 +1,23 @@
+---
+# Set up CouchDB Docker container on all instances.
+- hosts: all
+  vars_files:
+    - host_vars/general_vars.yaml
+    - host_vars/vault.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - config_db_all
+
+# Create CouchDB cluster.
+- hosts: instance_1
+  vars_files:
+    - host_vars/general_vars.yaml
+    - host_vars/vault.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo

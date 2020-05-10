@@ -1,0 +1,13 @@
+---
+# Configure instances with common requirements.
+- hosts: all
+  vars_files:
+    - host_vars/general_vars.yaml
+  gather_facts: true
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - config_general
+    - openstack_mount
