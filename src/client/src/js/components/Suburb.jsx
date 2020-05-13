@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Card } from '@material-ui/core';
+import { Grid, Typography, Card, ListItem, ListItemAvatar, Avatar, ListItemText, List } from '@material-ui/core';
 import { Bar, Doughnut } from 'react-chartjs-2'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
     heading: {
-        fontSize: theme.typography.pxToRem(15),
+        fontSize: theme.typography.pxToRem(20),
         fontWeight: theme.typography.fontWeightRegular,
     },
     heading1: {
@@ -23,9 +23,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Suburb = ({ selected }) => {
     const classes = useStyles();
+    
+    
     const getAvg = (keys, sentiment) => {
         return keys.map(k => sentiment[k]["average"])
     }
+
 
     const getCounts = (keys, sentiment) => {
         return keys.map(k => sentiment[k]["count"])
@@ -48,6 +51,12 @@ const Suburb = ({ selected }) => {
         return bd
     }
 
+    const setTotalTweets = selected => {
+        const v = JSON.parse(selected.properties.sentiment);
+        const sum = (getCounts(Object.keys(v), v)).reduce((a,b) => a + b, 0)
+        return sum
+    }
+
     const setCircleData = selected => {
         const v = JSON.parse(selected.properties.sentiment);
         const cd = {
@@ -63,6 +72,12 @@ const Suburb = ({ selected }) => {
                     '#FF5A40',
                     '#EF00FF',
                     '#050255',
+                    '#E52B50',
+                    '#A4C639',
+                    '#FAEBD7',
+                    '#008000',
+                    '#9F8170',
+                    '#000000',
                 ],
                 hoverBackgroundColor: [
                     '#FF6384',
@@ -73,6 +88,12 @@ const Suburb = ({ selected }) => {
                     '#FF5A40',
                     '#EF00FF',
                     '#050255',
+                    '#E52B50',
+                    '#A4C639',
+                    '#FAEBD7',
+                    '#008000',
+                    '#9F8170',
+                    '#000000',
                 ],
             }]
         }
@@ -93,7 +114,17 @@ const Suburb = ({ selected }) => {
                 <Typography align='center' className={classes.heading1}>{selected["properties"]["SA2_NAME16"]}</Typography>
             </Grid>
             <Grid item>
-                <Typography align='center' className={classes.heading}>Monthly Sentiment Average</Typography>
+                <List>
+                    <ListItem>
+                        <ListItemAvatar>
+                            <Avatar src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Twitter_NEW.png" alt="" />
+                        </ListItemAvatar>
+                        <ListItemText primary="Total Tweets Found" secondary={setTotalTweets(selected)}/>
+                    </ListItem>
+                </List>
+            </Grid>
+            <Grid item>
+                <Typography align='center' className={classes.heading} gutterBottom>Monthly Sentiment Average</Typography>
                 <Card>
                     <Bar
                         data={() => setBarData(selected)}
@@ -105,7 +136,7 @@ const Suburb = ({ selected }) => {
             </Grid>
             <Grid item>
 
-                <Typography align='center' className={classes.heading}>Monthly Tweet Frequency</Typography>
+                <Typography align='center' className={classes.heading} gutterBottom>Monthly Tweet Frequency</Typography>
                 <Card>
                     <Doughnut
                         data={() => setCircleData(selected)}
