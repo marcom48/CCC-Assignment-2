@@ -8,13 +8,13 @@ import config
 import time
 import sys
 import requests
-from requests.auth import HTTPBasicAuth 
+from requests.auth import HTTPBasicAuth
 
 def saveDB(database, data):
 
     save_count = 0
     server = couchdb.Server("http://%s:%s@127.0.0.1:5984/" % (config.COUCHDB_USER, config.COUCHDB_PASSWORD))
-    
+
     try:
         db = server[database]
     except:
@@ -46,9 +46,8 @@ def addSent(data, dict_key, sentiment, value):
     if not data.get(dict_key):
         data[dict_key] = {}
         data[dict_key]['sentiments'] = defaultdict(int)
-    
-    data[dict_key]['sentiments'][sentiment] += value
 
+    data[dict_key]['sentiments'][sentiment] += value
 
 def updateDB(database, command):
 
@@ -61,7 +60,7 @@ def updateDB(database, command):
     # Results dictionary
     full_data = defaultdict(dict)
     melbourne = False
-    
+
     # Save full city data too
     if database == 'users':
         melbourne = True
@@ -73,6 +72,10 @@ def updateDB(database, command):
             _id = i['key'][0]
             if not full_data.get(_id):
                 full_data[_id] = {'_id': _id}
+                for d in config.dates:
+                    full_data[_id][d] = {}
+                    full_data[_id][d]['sentiments'] = {str(i):0 for i in range(1,11)}
+
 
             # Date details
             year = i['key'][1]
@@ -90,7 +93,7 @@ def updateDB(database, command):
             print(e)
             count += 1
             pass
-    
+
     # Compute average and count for weeks
     for i,j in full_data.items():
         for week in j:
@@ -102,7 +105,6 @@ def updateDB(database, command):
                 pass
 
     saveDB(database, full_data)
-    
     if melbourne:
         for i,j in melbourne_data.items():
             try:
@@ -131,9 +133,4 @@ def main():
             print(e)
             pass
         time.sleep(3600 * 6)
-        
-
-if __name__ == "__main__":
-    main()
-
 

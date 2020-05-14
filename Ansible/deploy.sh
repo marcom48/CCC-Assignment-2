@@ -20,30 +20,30 @@ read inpt
 
 case $inpt in 
     "1")
-        ansible-playbook --ask-become-pass ./playbooks/instance_setup.yaml;
+        ansible-playbook --ask-become-pass instance_setup.yaml;
         ;;
     "2")
-        ansible-playbook -i openstack_inventory.py ./playbooks/config_general.yaml;
+        ansible-playbook -i openstack_inventory.py config_general.yaml;
         ;;
     "3")
-        ansible-playbook --ask-vault-pass -i openstack_inventory.py ./playbooks/config_couchdb.yaml;
+        ansible-playbook --ask-vault-pass -i openstack_inventory.py config_couchdb.yaml;
         ;;
     "4")
-        ansible-playbook -i openstack_inventory.py ./playbooks/config_nginx.yaml
+        ansible-playbook -i openstack_inventory.py config_nginx.yaml
         ;;
     "5")
-        ansible-playbook --ask-vault-pass -i openstack_inventory.py ./playbooks/harvester.yaml;
+        ansible-playbook --ask-vault-pass -i openstack_inventory.py harvester.yaml;
         ;;
     "6")
-        ansible-playbook --ask-vault-pass -i openstack_inventory.py ./playbooks/processor.yaml;
+        ansible-playbook --ask-vault-pass -i openstack_inventory.py processor.yaml;
         ;;
     "7")
-        ansible-playbook --ask-vault-pass -i openstack_inventory.py ./playbooks/client.yaml;
+        ansible-playbook --ask-vault-pass -i openstack_inventory.py client.yaml;
         ;;
     "8")
-        ansible-playbook --ask-become-pass ./playbooks/instance_setup.yaml;
+        ansible-playbook --ask-become-pass instance_setup.yaml;
         wait
-        ansible-playbook --ask-vault-pass -i openstack_inventory.py ./playbooks/full_setup.yaml;
+        ansible-playbook --ask-vault-pass -i openstack_inventory.py full_setup.yaml;
         ;;
     *)
         echo "Invalid job number."
