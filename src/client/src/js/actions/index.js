@@ -6,6 +6,8 @@ import  {
     GET_SUBURB_DATA,
     GET_MELBOURNE_DATA,
     STATS_DRAWER,
+    GET_AREA_DATA,
+    SET_AREA_DATA,
 } from '../constants/action-types';
 
 
@@ -21,7 +23,6 @@ export const selectArea = e => ({
 
 export const getPoints = () => ({
     type: GET_POINTS,
-
 });
 
 export const getUserHistory = user => ({
@@ -41,3 +42,13 @@ export const openStatsDrawer = (open) => ({
     type: STATS_DRAWER,
     open: open,
 });
+
+export const getAreaData = () => ({
+    type: GET_AREA_DATA,
+});
+
+export const setAreaData = (data) => ({
+    type: SET_AREA_DATA,
+    data: data,
+});
+

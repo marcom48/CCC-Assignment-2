@@ -12,6 +12,8 @@ import {
     GET_SUBURB_DATA,
     GET_MELBOURNE_DATA,
     STATS_DRAWER,
+    GET_AREA_DATA,
+    SET_AREA_DATA,
 } from '../constants/action-types';
 
 
@@ -23,6 +25,7 @@ const initialState = {
     suburbData: null,
     userData: null,
     melbData: null,
+    areaData: null,
 }
 
 const MapReducer = (state = initialState, action) => {
@@ -54,6 +57,11 @@ const MapReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userData: action.selected
+            };
+        case SET_AREA_DATA:
+            return {
+                ...state,
+                areaData: action.data,
             };
         default:
             return state;

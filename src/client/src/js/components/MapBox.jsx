@@ -7,9 +7,9 @@ import Axios from 'axios';
 
 import * as melb_geo from '../constants/melbourne.geojson'
 import * as melb_points from '../constants/melbourneTweets.geojson'
-import { selectArea, selectPoint } from '../actions'
+import { selectArea, selectPoint, setAreaData } from '../actions'
 import { useSelector, useDispatch } from 'react-redux';
-import { requestDB, combineSuburbData } from '../helpers'
+import { requestDB, combineSuburbData, extractTotalTweets } from '../helpers'
 
 const styles = {
   width: "100vw",
@@ -42,7 +42,7 @@ const MapBox = () => {
     map.getSource('suburbs').setData(suburbData)
     map.getSource('points').setData(pointData)
     // console.log(suburbData)
-
+    dispatch(setAreaData(extractTotalTweets(res[1].data.rows)));
   }
 
   useEffect(() => {

@@ -93,3 +93,45 @@ export const combineSuburbData = (r, suburbs) => {
   }
   return suburbs
 }
+
+
+export const extractTotalTweets = (data) => {
+  const res = []
+  const pre = ["2018", "2019"]
+  data.forEach(e => {
+    var id = e["id"]
+    var count = 0
+    var pre_covid = 0.0
+    var pre_count = 0
+    var post_covid  = 0.0
+    var post_count = 0
+    var pre_seen = 0
+    var post_seen = 0
+    var cur = {"suburb": id}
+    Object.keys(e["doc"]).forEach(k => {
+      if (k[0] != "_") {
+        count += e["doc"][k]["count"]
+        if (k.match(pre[0]) || k.match(pre[1])) {
+          pre_covid += e["doc"][k]["average"] 
+          pre_count += e["doc"][k]["count"]
+          pre_seen += 1
+        } else {
+          post_covid += e["doc"][k]["average"]
+          post_count += e["doc"][k]["count"]
+          post_seen += 1
+        }
+      }
+    })
+
+    cur["pre_sentiment"] = +((pre_covid / pre_seen).toFixed(2))
+    cur["pre_count"] = pre_count
+    cur["post_sentiment"] = +((post_covid / post_seen).toFixed(2))
+    cur["post_count"] = post_count
+    cur["change"] = +((cur["pre_sentiment"] - cur["post_sentiment"]).toFixed(2))
+    cur["count"] = count
+    res.push(cur)
+  })
+
+  // res.sort(function(a,b){return b["count"] - a["count"]})
+  return res
+}
