@@ -123,6 +123,14 @@ export const extractTotalTweets = (data) => {
       }
     })
 
+    if (post_covid == 0){
+      console.log(id, post_count, post_seen)
+    }
+
+    if (pre_covid == 0){
+      console.log(id, pre_count, pre_seen)
+    }
+
     cur["pre_sentiment"] = +((pre_covid / pre_seen).toFixed(2))
     cur["pre_count"] = pre_count
     cur["post_sentiment"] = +((post_covid / post_seen).toFixed(2))

@@ -41,7 +41,7 @@ const MapBox = () => {
 
     map.getSource('suburbs').setData(suburbData)
     map.getSource('points').setData(pointData)
-    // console.log(suburbData)
+    console.log(suburbData)
     dispatch(setAreaData(extractTotalTweets(res[1].data.rows)));
   }
 
