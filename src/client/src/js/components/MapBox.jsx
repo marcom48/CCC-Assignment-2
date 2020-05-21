@@ -1,3 +1,12 @@
+/*
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+*/
+
 import React, { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 import { MAPBOX_PUB_KEY } from '../constants/config'
@@ -275,7 +284,5 @@ const MapBox = () => {
       <Sidebar />
     </>
   )
-
 }
-
 export default MapBox;

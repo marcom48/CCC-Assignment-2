@@ -1,5 +1,12 @@
 ---
-# Deply frontend build to servers.
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
+
+# Deploy frontend build to servers.
 - hosts: instance_1
   vars_files:
     - host_vars/general_vars.yaml

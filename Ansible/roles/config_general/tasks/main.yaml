@@ -1,4 +1,10 @@
 ---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Gather facts
   setup:
     gather_subset: all
@@ -37,7 +43,6 @@
 - name: Activate NTP service
   shell: timedatectl set-ntp on
 
-  # Do we need all those packages
 - name: Install general packages
   apt:
     name:
@@ -52,38 +57,6 @@
     state: latest
     update_cache: yes
     install_recommends: no
-
-# Disabled as current image has Docker. Keeping this for the moment as
-# pre-loaded image requires all Docker actions as sudo - may be problematic in future.
-# Current image has docker installed.
-# - name: Add Docker apt repository key
-#   apt_key:
-#     url: https://download.docker.com/linux/ubuntu/gpg
-#     state: present
-
-# - name: Add Docker apt repositoy key
-#   apt_repository:
-#     repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release | lower }} stable"
-#     mode: 644
-#     update_cache: yes
-#     state: present
-
-# - name: Install Docker
-#   apt:
-#     name: ["docker-ce"]
-#     state: latest
-#     update_cache: yes
-#     install_recommends: no
-
-# - name: Assert Docker is running
-#   systemd:
-#     name: docker
-#     state: started
-
-# - name: Restart Docker
-#   systemd:
-#     name: docker
-#     state: restarted
 
 - name: Restart SSH service.
   import_tasks: restart_ssh.yaml

@@ -1,5 +1,13 @@
+'''
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+'''
+
 import couchdb
-from tqdm import tqdm
 from collections import defaultdict
 import traceback
 import datetime
@@ -11,8 +19,10 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 def saveDB(database, data):
+    '''
+    Save a list of documents to a database.
+    '''
 
-    save_count = 0
     server = couchdb.Server("http://%s:%s@127.0.0.1:5984/" % (config.COUCHDB_USER, config.COUCHDB_PASSWORD))
 
     try:
@@ -24,8 +34,7 @@ def saveDB(database, data):
             pass
         db = server[database]
 
-
-    for i in tqdm(data):
+    for i in data:
         try:
             if not db.get(i):
                 db.save(data[i])
@@ -36,10 +45,8 @@ def saveDB(database, data):
                 db.save(doc)
 
         except:
-            save_count += 1
             pass
 
-    return save_count
 
 def addSent(data, dict_key, sentiment, value):
 
@@ -66,7 +73,7 @@ def updateDB(database, command):
         melbourne = True
         melbourne_data = defaultdict(dict)
 
-    for i in tqdm(data):
+    for i in data:
         try:
 
             _id = i['key'][0]
@@ -90,8 +97,6 @@ def updateDB(database, command):
 
         except Exception as e:
             traceback.print_exc()
-            print(e)
-            count += 1
             pass
 
     # Compute average and count for weeks
@@ -103,8 +108,11 @@ def updateDB(database, command):
                 j[week]['average'] = sum([int(x)*y for x,y in sents.items()]) / sum(sents.values())
             except:
                 pass
-
+    
+    # Save data
     saveDB(database, full_data)
+    
+    
     if melbourne:
         for i,j in melbourne_data.items():
             try:

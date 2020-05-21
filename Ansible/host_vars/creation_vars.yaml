@@ -1,4 +1,11 @@
 ---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
+
 avail_zone_comm: melbourne-qh2-uom
 instance_image_comm: 215f9775-483c-4e0a-b703-d21a5c966f2e
 instance_network_comm: qh2-uom-internal

@@ -1,4 +1,10 @@
 ---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Pull nginx:latest Docker image
   docker_image:
     name: nginx
@@ -17,7 +23,6 @@
     state: absent
   when: nginx_pull_rst.changed or nginx_conf_rst.changed
 
-  # Update this to be Ansible docker configurations.
 - name: Start the Nginx docker
   shell: >
     docker run

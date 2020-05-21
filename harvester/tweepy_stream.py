@@ -1,3 +1,12 @@
+'''
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+'''
+
 import os
 import tweepy
 import database
@@ -88,7 +97,6 @@ def main(api, tweet_queue, user_queue, error_count):
                     # Stops us from being rate limited
                     print("Too many errors")
                     time.sleep(3600 * 3)
-                    # sys.exit()
 
         except queue.Empty:
             time.sleep(5)

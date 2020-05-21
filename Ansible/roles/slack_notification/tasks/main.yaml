@@ -1,5 +1,12 @@
+---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Send notification message via Slack
   slack:
     token: T010WBG1DD0/B012BH0GQES/5gKV6iO0tVXARRa4ov0tK92v
-    msg: '{{ ansible_hostname }} completed deployment'
-    channel: '#deployment'
+    msg: "{{ ansible_hostname }} completed deployment"
+    channel: "#deployment"

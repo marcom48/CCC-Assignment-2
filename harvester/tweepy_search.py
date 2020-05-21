@@ -1,3 +1,12 @@
+'''
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+'''
+
 import tweepy
 import config
 import database
@@ -29,7 +38,5 @@ def main(api, tweet_queue, error_count):
 
 
         time.sleep(16 * 60)
-# api = harvest.get_auth()
-# for tweet in api.search(geocode=config.VICTORIA_RADIUS, count=1, since_id = config.TWEET_DEC2019):
-#     print(tweet._json)
+
 
