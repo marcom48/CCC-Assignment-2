@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Suburb = ({ selected }) => {
     const classes = useStyles();
-    
-    
+
+
     const getAvg = (keys, sentiment) => {
         return keys.map(k => sentiment[k]["average"])
     }
@@ -48,12 +48,13 @@ const Suburb = ({ selected }) => {
                 data: getAvg(Object.keys(v), v),
             }]
         }
+        console.log(getAvg(Object.keys(v), v))
         return bd
     }
 
     const setTotalTweets = selected => {
         const v = JSON.parse(selected.properties.sentiment);
-        const sum = (getCounts(Object.keys(v), v)).reduce((a,b) => a + b, 0)
+        const sum = (getCounts(Object.keys(v), v)).reduce((a, b) => a + b, 0)
         return sum
     }
 
@@ -119,7 +120,7 @@ const Suburb = ({ selected }) => {
                         <ListItemAvatar>
                             <Avatar src="https://cdn2.iconfinder.com/data/icons/metro-uinvert-dock/256/Twitter_NEW.png" alt="" />
                         </ListItemAvatar>
-                        <ListItemText primary="Total Tweets Found" secondary={setTotalTweets(selected)}/>
+                        <ListItemText primary="Total Tweets Found" secondary={setTotalTweets(selected)} />
                     </ListItem>
                 </List>
             </Grid>
