@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { extractTotalTweets } from '../helpers';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Card, ListItem, ListItemAvatar, Avatar, ListItemText, List } from '@material-ui/core';
-
+import * as avgmed  from '../constants/average_tweet_sentiment_by_median_household_income.png'
+import * as avgage  from '../constants/average_tweet_sentiment_by_population_between_55_to_64_years_old.png'
+import * as cases from '../constants/cases_vs_sentiment.png'
+import * as chng from '../constants/change_in_average_tweet_sentiment_by_median_household_income.png'
 import MaterialTable from 'material-table';
 import { Container } from '@material-ui/core';
 import { forwardRef } from 'react';
@@ -48,7 +51,7 @@ const tableIcons = {
         width: '100%',
     },
     heading: {
-        fontSize: theme.typography.pxToRem(20),
+        fontSize: theme.typography.pxToRem(35),
         fontWeight: theme.typography.fontWeightRegular,
     },
     heading1: {
@@ -57,6 +60,7 @@ const tableIcons = {
     },
     pad: {
         padding: theme.spacing(3),
+        maxWidth: '100vw'
     },
 }));
 
@@ -69,17 +73,16 @@ const Statistics = () => {
     
 
     return (
-        <Container maxWidth="lg">
         <Grid
             container
             direction="column"
-            justify="flex-start"
+            justify="center"
             alignItems="center"
             spacing={6}
             className={classes.pad}
         >
             <Grid item>
-                <Typography align='center' className={classes.heading1}> Statistics </Typography>
+                <Typography align='center' className={classes.heading}> Statistics </Typography>
             </Grid>
             <Grid item>
                 <MaterialTable 
@@ -95,8 +98,31 @@ const Statistics = () => {
                 data={state.areaData}
                 />
             </Grid>
+            <Grid item>
+                <Typography align='center' className={classes.heading1}> Average Tweet Sentiment vs Median Household Income </Typography>
+            </Grid>
+            <Grid item>
+                <img src={avgmed} alt=""/>
+            </Grid>
+            <Grid item>
+                <Typography align='center' className={classes.heading1}> Average Tweet Sentiment vs Beetween age 55-64 </Typography>
+            </Grid>
+            <Grid item>
+                <img src={avgage} alt=""/>
+            </Grid>
+            <Grid item>
+                <Typography align='center' className={classes.heading1}> Cases vs Sentiment </Typography>
+            </Grid>
+            <Grid item>
+                <img src={cases} alt=""/>
+            </Grid>
+            <Grid item>
+                <Typography align='center' className={classes.heading1}> Change in Average Tweet Sentiment by Median Household Income </Typography>
+            </Grid>
+            <Grid item>
+                <img src={chng} alt=""/>
+            </Grid>
         </Grid>
-        </Container>
     )
 
 
