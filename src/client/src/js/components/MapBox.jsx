@@ -4,6 +4,7 @@ import { MAPBOX_PUB_KEY } from '../constants/config'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import Sidebar from './Sidebar'
 import Axios from 'axios';
+import './MapBox.css'
 
 import * as melb_geo from '../constants/melbourne.geojson'
 import * as melb_points from '../constants/melbourneTweets.geojson'
@@ -26,6 +27,7 @@ const MapBox = () => {
   const [lng, setLng] = useState(145.11);
   const [lat, setLat] = useState(-37.84);
   const [zoom, setZoom] = useState(8);
+  const [legend, setLegend] = useState(true);
   const [map, setMap] = useState(null);
 
   const loadData = async (map) => {
@@ -192,7 +194,13 @@ const MapBox = () => {
           }
         })
 
-
+        map.on('zoom', function () {
+            if (map.getZoom() >= 12) {
+              setLegend(false);
+            } else {
+              setLegend(true);
+            }
+        })
 
         const onAreaClick = (e) => {
           dispatch(selectArea(e));
@@ -249,6 +257,20 @@ const MapBox = () => {
 
   return (
     <>
+     <div className='legend' style={{'display': legend ? 'block' : 'none'}}>
+          <h4>Suburb Tweet Sentiment</h4>
+          <div><span style={{ backgroundColor: '#F2F12D' }}></span>0.0</div>
+          <div><span style={{ backgroundColor: '#EED322' }}></span>1.0</div>
+          <div><span style={{ backgroundColor: '#E6B71E' }}></span>2.0</div>
+          <div><span style={{ backgroundColor: '#DA9C20' }}></span>3.0</div>
+          <div><span style={{ backgroundColor: '#CA8323' }}></span>4.0</div>
+          <div><span style={{ backgroundColor: '#B86B25' }}></span>5.0</div>
+          <div><span style={{ backgroundColor: '#A25626' }}></span>6.0</div>
+          <div><span style={{ backgroundColor: '#8B4225' }}></span>7.0</div>
+          <div><span style={{ backgroundColor: '#723122' }}></span>8.0</div>
+          <div><span style={{ backgroundColor: '#512015' }}></span>9.0</div>
+          <div><span style={{ backgroundColor: '#000000' }}></span>10.0</div>
+        </div>
       <div ref={el => (mapContainer.current = el)} style={styles} />
       <Sidebar />
     </>
