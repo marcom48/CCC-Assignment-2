@@ -1,3 +1,12 @@
+'''
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+'''
+
 from shapely.geometry import shape, Point, polygon
 import json
 import random
@@ -54,10 +63,6 @@ class SuburbProcessor():
                 longitude = tweet["coordinates"]["coordinates"][0]
                 latitude = tweet["coordinates"]["coordinates"][1]
             else:
-                
-                # Randomise.
-                # longitude = random.uniform(VICTORIA[0], VICTORIA[2])
-                # latitude = random.uniform(VICTORIA[1], VICTORIA[3])
                 
                 return None, None, None
             

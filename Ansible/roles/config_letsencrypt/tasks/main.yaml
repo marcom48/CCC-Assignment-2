@@ -1,4 +1,10 @@
 ---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Start NGINX
   docker_container:
     name: nginx_proxy_{{ ansible_hostname }}
@@ -6,8 +12,8 @@
     state: started
     restart: no
     published_ports:
-    - "80:80"
-    - "443:443"
+      - "80:80"
+      - "443:443"
     env:
       http_proxy: "http://wwwproxy.unimelb.edu.au:8000"
       https_proxy: "http://wwwproxy.unimelb.edu.au:8000"
@@ -15,28 +21,8 @@
       HTTPS_PROXY: "http://wwwproxy.unimelb.edu.au:8000"
       ftp_proxy: "http://wwwproxy.unimelb.edu.au:8000"
     volumes:
-    - /etc/nginx/certs
-    - /etc/nginx/vhost.d
-    - /usr/share/nginx/html
-    - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
   become: yes
-
-# - name: Start NGINX LETSENCRPYT
-#   docker_container:
-#     name: nginx_lencrypt_{{ ansible_hostname }}
-#     image: jrcs/letsencrypt-nginx-proxy-companion
-#     state: started
-#     restart: no
-#     debug: yes
-#     env:
-#       http_proxy: "http://wwwproxy.unimelb.edu.au:8000"
-#       https_proxy: "http://wwwproxy.unimelb.edu.au:8000"
-#       HTTP_PROXY: "http://wwwproxy.unimelb.edu.au:8000"
-#       HTTPS_PROXY: "http://wwwproxy.unimelb.edu.au:8000"
-#       ftp_proxy: "http://wwwproxy.unimelb.edu.au:8000"
-#       DEFAULT_EMAIL: "a.mccleron@student.unimelb.edu.au"
-#     volumes_from:
-#     - nginx_proxy_{{ ansible_hostname }}
-#     volumes:
-#     - /var/run/docker.sock:/tmp/docker.sock:ro
-#   become: yes

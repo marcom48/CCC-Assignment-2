@@ -1,8 +1,0 @@
----
-- name: Transfer local website build to cloud instance.
-  copy:
-    src: /home/mmarasco/OneDrive/University/2020/Cluster & Cloud Computing/Test CouchDB/Mine/demosite/build
-    dest: /root/ccc_site
-    directory_mode: yes
-    force: yes
-    mode: "755"

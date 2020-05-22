@@ -1,7 +1,14 @@
+'''
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+'''
+
 import couchdb
-
 import time
-
 import config
 import processor
 
@@ -95,11 +102,6 @@ class DBHelper:
         self.db_located[located_data['_id']] = located_data
 
 
-
-
-
-
-
     def add_tweet(self, tweet) -> bool:
         # Remove duplicates
         if not self.db_tweets.get(tweet["id_str"]):
@@ -110,8 +112,6 @@ class DBHelper:
                 self.db_tweets[tweet["id_str"]] = data
 
                 if has_location and not self.db_located.get(tweet["id_str"]):
-                    # # print(tweet["id_str"])
-                    # data['_id'] = data['_id'] + "_loc"
 
                     self.store_located(data)
 
@@ -138,7 +138,7 @@ class DBHelper:
 
     def add_user(self, user_id, user_handle, last_tweet) -> None:
 
-        # Add in processor method
+
         data = {
             '_id': user_id,
             'screenName': user_handle,

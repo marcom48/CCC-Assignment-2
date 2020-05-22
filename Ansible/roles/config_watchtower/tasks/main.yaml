@@ -1,4 +1,10 @@
 ---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Start Watchtower
   docker_container:
     name: ccc_watchtower_{{ ansible_hostname }}
@@ -17,5 +23,5 @@
       WATCHTOWER_NOTIFICATION_SLACK_CHANNEL: "#deployment"
       WATCHTOWER_NOTIFICATION_SLACK_ICON_EMOJI: ":male_mage:"
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
   become: yes

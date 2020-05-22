@@ -1,4 +1,10 @@
 ---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Start Client
   docker_container:
     name: ccc_client_{{ ansible_hostname }}
@@ -6,7 +12,7 @@
     state: started
     restart: yes
     ports:
-    - "8000:5000"
+      - "8000:5000"
     env:
       COUCHDB_USER: "{{ vault_couchdb_user }}"
       COUCHDB_PASSWORD: "{{ vault_couchdb_password }}"

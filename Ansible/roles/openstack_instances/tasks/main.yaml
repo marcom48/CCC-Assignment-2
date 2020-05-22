@@ -1,4 +1,10 @@
 ---
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Create instances on NeCTAR
   os_server:
     name: "{{ item.0.name }}"
@@ -18,7 +24,6 @@
     - "{{ openstack_vols }}"
   register: os_instance
 
-  # no_log: true
 - debug:
     msg: "Instance {{ item.openstack.name }} has been created. IP address is {{ item.openstack.public_v4 }}"
   loop: "{{ os_instance.results }}"

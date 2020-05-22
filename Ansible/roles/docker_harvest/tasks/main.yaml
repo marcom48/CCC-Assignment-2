@@ -1,24 +1,14 @@
 ---
-# - name: Transfer harvester application
-#   copy:
-#     src: ../harvester
-#     dest: /home/ubuntu
-#     directory_mode: yes
-#     force: yes
-#     owner: ubuntu
-#     mode: "755"
-
+# COMP90024
+# Team 11
+# Marco Marasco - 834882
+# Austen McClernon - 834063
+# Sam Mei - 1105817
+# Cameron Wong - 1117840
 - name: Remove existing harvester
   docker_container:
     name: "{{ ansible_hostname }}_harvester"
     state: absent
-
-# # SET DOCKER PROXY
-# - name: Build harvester
-#   shell: docker build -t  kvoli/ccc-stream .
-#   args:
-#     chdir: /home/ubuntu/harvester
-#   become: yes
 
 - name: Start harvester
   docker_container:

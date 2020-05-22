@@ -1,3 +1,12 @@
+'''
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+'''
+
 import tweepy
 import config
 import database
@@ -22,7 +31,6 @@ def search_user(api, db, user_id):
 
         if not db.scraped_user(user_id):
         
-            # for _ in range(5):
 
             check_status(api)
 
@@ -66,7 +74,7 @@ def search_user(api, db, user_id):
     except Exception as e:
         print("Error searching user", user_id)
         print(e)
-        # sys.exit()
+
 
 def main(api, user_queue, error_count):
 
@@ -86,12 +94,12 @@ def main(api, user_queue, error_count):
             except Exception as e:
                 print("User save error", e)
                 error_count += 1
+
                 if error_count> 100:
                     # Stops us from being rate limited
                     print("Too many errors")
                     time.sleep(3600 * 3)
-                    # sys.exit()
-
+                
 
         except queue.Empty:
             time.sleep(10)

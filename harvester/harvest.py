@@ -1,3 +1,12 @@
+'''
+COMP90024
+Team 11
+Marco Marasco - 834882
+Austen McClernon - 834063
+Sam Mei - 1105817
+Cameron Wong - 1117840
+'''
+
 import tweepy
 import tweepy_stream
 import tweepy_user
@@ -11,7 +20,6 @@ def get_auth():
     auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
     return tweepy.API(auth)
     
-
 
 def main():
     
