@@ -55,9 +55,18 @@ const UserDetails = () => {
     const getAvg = (keys, sentiment) => {
         return keys.map(k => sentiment[k]["average"])
     }
+    const setLabels = obj => {
+        for (let key in obj) {
+            let date = obj[key]
+            let lastChar = parseInt(date.slice(date.length - 1)) + 1
+            let new_date = date.slice(0, date.length - 1) + lastChar
+            obj[key] = new_date
+        }
+        return obj
+    }
     const setBarData = v => {
         const bd = {
-            labels: Object.keys(v),
+            labels: setLabels(Object.keys(v)),
             datasets: [{
                 label: 'Avg Sentiment',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',

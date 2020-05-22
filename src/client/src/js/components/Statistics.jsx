@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { extractTotalTweets } from '../helpers';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Card, ListItem, ListItemAvatar, Avatar, ListItemText, List } from '@material-ui/core';
-import * as avgmed  from '../constants/average_tweet_sentiment_by_median_household_income.png'
-import * as avgage  from '../constants/average_tweet_sentiment_by_population_between_55_to_64_years_old.png'
+import * as avgmed from '../constants/average_tweet_sentiment_by_median_household_income.png'
+import * as avgage from '../constants/average_tweet_sentiment_by_population_between_55_to_64_years_old.png'
 import * as cases from '../constants/cases_vs_sentiment.png'
 import * as chng from '../constants/change_in_average_tweet_sentiment_by_median_household_income.png'
 import MaterialTable from 'material-table';
@@ -44,9 +44,9 @@ const tableIcons = {
     SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-  };
+};
 
-  const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
@@ -70,7 +70,7 @@ const Statistics = () => {
     const state = useSelector(store => store.MapReducer);
     const classes = useStyles();
 
-    
+
 
     return (
         <Grid
@@ -85,42 +85,42 @@ const Statistics = () => {
                 <Typography align='center' className={classes.heading}> Statistics </Typography>
             </Grid>
             <Grid item>
-                <MaterialTable 
-                icons={tableIcons}
-                title="Suburb Level Statistics"
-                columns={[
-                    {title: "Suburb", field: "suburb"},
-                    {title: "Count", field: "count", defaultSort: "desc"},
-                    {title: "Pre-Covid19 Sentiment", field: "pre_sentiment"},
-                    {title: "Covid19 Sentiment", field: "post_sentiment"},
-                    {title: "Delta", field: "change"},
-                ]}
-                data={state.areaData}
+                <MaterialTable
+                    icons={tableIcons}
+                    title="Suburb Level Statistics"
+                    columns={[
+                        { title: "Suburb", field: "suburb" },
+                        { title: "Count", field: "count", defaultSort: "desc" },
+                        { title: "Pre-Covid19 Sentiment", field: "pre_sentiment" },
+                        { title: "Covid19 Sentiment", field: "post_sentiment" },
+                        { title: "Delta", field: "change" },
+                    ]}
+                    data={state.areaData}
                 />
             </Grid>
             <Grid item>
                 <Typography align='center' className={classes.heading1}> Average Tweet Sentiment vs Median Household Income </Typography>
             </Grid>
             <Grid item>
-                <img src={avgmed} alt=""/>
+                <img src={avgmed} alt="" />
             </Grid>
             <Grid item>
                 <Typography align='center' className={classes.heading1}> Average Tweet Sentiment vs Beetween age 55-64 </Typography>
             </Grid>
             <Grid item>
-                <img src={avgage} alt=""/>
+                <img src={avgage} alt="" />
             </Grid>
             <Grid item>
                 <Typography align='center' className={classes.heading1}> Cases vs Sentiment </Typography>
             </Grid>
             <Grid item>
-                <img src={cases} alt=""/>
+                <img src={cases} alt="" />
             </Grid>
             <Grid item>
                 <Typography align='center' className={classes.heading1}> Change in Average Tweet Sentiment by Median Household Income </Typography>
             </Grid>
             <Grid item>
-                <img src={chng} alt=""/>
+                <img src={chng} alt="" />
             </Grid>
         </Grid>
     )

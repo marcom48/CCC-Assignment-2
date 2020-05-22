@@ -33,11 +33,20 @@ const Suburb = ({ selected }) => {
     const getCounts = (keys, sentiment) => {
         return keys.map(k => sentiment[k]["count"])
     }
+    const setLabels = obj => {
+        for (let key in obj) {
+            let date = obj[key]
+            let lastChar = parseInt(date.slice(date.length - 1)) + 1
+            let new_date = date.slice(0, date.length - 1) + lastChar
+            obj[key] = new_date
+        }
+        return obj
+    }
 
     const setBarData = selected => {
         const v = JSON.parse(selected.properties.sentiment);
         const bd = {
-            labels: Object.keys(v),
+            labels: setLabels(Object.keys(v)),
             datasets: [{
                 label: 'Avg Sentiment',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -48,7 +57,6 @@ const Suburb = ({ selected }) => {
                 data: getAvg(Object.keys(v), v),
             }]
         }
-        console.log(getAvg(Object.keys(v), v))
         return bd
     }
 
