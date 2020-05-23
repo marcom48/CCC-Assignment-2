@@ -162,7 +162,7 @@ const Statistics = () => {
 			<Grid item>
 				<Typography align='center' className={classes.heading1}>
 					{' '}
-					Average Sentiment vs Age{' '}
+					Average Tweet Sentiment vs Age{' '}
 				</Typography>
 			</Grid>
 			<Grid item>
