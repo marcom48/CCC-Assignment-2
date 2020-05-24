@@ -1,10 +1,21 @@
-# CCC-Assignment-2
+# Cluster & Cloud Computing Assignment 2
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg)](#contributors)
 
-### Running Ansible script
+[![Demo Video](https://img.youtube.com/vi/QrbDGa5DcB0/0.jpg)](https://www.youtube.com/watch?v=QrbDGa5DcB0&feature=youtu.be)
 
-You will need to configure it for your own account:
 
-- Username in openrc.sh
-- Keypair in creation/general_vars.yaml
+## Team 11
+Marco Marasco - 834882  
+Austen McClernon - 834063  
+Sam Mei - 1105817  
+Cameron Wong - 1117840  
 
-Then run start.sh. Note: If it crashes, erase everything on the cloud and restart. The system is a bit buggy.
+
+## Folder Structure
+```js
+/
+├─ Ansible/         // Ansible playbooks to deploy the application via the MRC.
+├─ harvester/      // Scripts for Twitter harvesters.
+├─ processor/           // Scripts for website data processor.
+├─ src/         // Front-end website scripts.
+```
