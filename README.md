@@ -15,7 +15,7 @@ Cameron Wong - 1117840
 ```js
 /
 ├─ Ansible/         // Ansible playbooks to deploy the application via the MRC.
-├─ harvester/      // Scripts for Twitter harvesters.
-├─ processor/           // Scripts for website data processor.
-├─ src/         // Front-end website scripts.
+├─ harvester/       // Scripts for Twitter harvesters.
+├─ processor/       // Scripts for website data processor.
+├─ src/             // Front-end website scripts.
 ```
