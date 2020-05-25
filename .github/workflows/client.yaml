@@ -1,13 +1,7 @@
 
 name: Package Client Docker
 
-on:
-  push:
-    paths:
-      - '*'
-  pull_request:
-    branches:
-      - master
+on: push
 
 jobs:
   build:
