@@ -55,9 +55,9 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
 
-  useEffect = () => {
+  useEffect(() => {
     initializeReactGA();
-  }
+  })
 
   return (
     <div className={classes.root}>
