@@ -7,13 +7,21 @@ Sam Mei - 1105817
 Cameron Wong - 1117840
 */
 
-import React from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import Main from "./Main";
+import ReactGA from "react-ga";
+
+
+function initializeReactGA() {
+  ReactGA.initialize('UA-167432602-1');
+  ReactGA.pageview('/homepage');
+}
+
 
 const THEME = createMuiTheme({
   palette: {
@@ -46,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const classes = useStyles();
+
+  useEffect = () => {
+    initializeReactGA();
+  }
 
   return (
     <div className={classes.root}>
